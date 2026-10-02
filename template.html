@@ -306,7 +306,7 @@ function renderAnalysis(){
     <h2>Limits of this method</h2>
     <div class="panel"><ul>${A.limits.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>
     <h2>Sources</h2>
-    <ol class="sources">${usedSources.map(id => { const s = EV.sources[id]; return `<li>[${id}] <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.doc)}</a> · ${esc(s.date)}</li>`; }).join("")}</ol>`;
+    <ol class="sources">${usedSources.map(id => { const s = EV.sources[id]; return `<li>[${id}] ${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.doc)}</a>` : esc(s.doc) + " (pasted into this tool — see “Score a new brief” → Load example)"} · ${esc(s.date)}</li>`; }).join("")}</ol>`;
 }
 
 /* ---------------- tab 2: paste & process ---------------- */
@@ -377,34 +377,69 @@ function parseBrief(raw, doc){
     }
     return {facts, gaps, mode: "JSON brief"};
   }
-  // Markdown / plain text: walk lines, track headings, split paragraphs into sentences.
-  let heading = "", field = null, para = 0, inGaps = false;
+  // Markdown / plain text (incl. text copied from a PDF with hard line wraps):
+  // 1) group lines into blocks (paragraph, bullet, source/quote), re-joining wrapped lines;
+  // 2) headings set the section; "Source: … — "quote"" lines attach a locator + quote to that section's facts.
+  const isHeading = l => {
+    const h = l.match(/^#{1,6}\s+(.*)/); if (h) return h[1];
+    if (/^\d{1,2}\.\s+[A-Z][^.!?]{2,70}$/.test(l)) return l;          // "4. Supply Chain Concentration / Fragility"
+    if (/^(NAICS Code|Gaps\b|Industry Brief\b)/i.test(l)) return l;
+    return null;
+  };
+  const blocks = []; let cur = null;
   for (let line of txt.split(/\r?\n/)){
     line = line.trim();
-    if (!line || /^-{3,}$/.test(line)) continue;
-    const h = line.match(/^#{1,6}\s+(.*)/);
-    if (h){
-      heading = h[1].replace(/^\d+\.\s*/, "").trim(); para = 0;
-      inGaps = /gap/i.test(heading);
-      field = null; for (const [re, f] of HEADING_TO_FIELD) if (re.test(heading)) { field = f; break; }
-      if (/^industry brief|naics/i.test(heading)) field = "__skip";
+    if (!line || /^-{3,}$/.test(line)){ cur = null; continue; }
+    const h = isHeading(line);
+    if (h){ blocks.push({kind: "heading", text: h}); cur = null; continue; }
+    const m = line.match(/^(>|[-*•]\s+|Source:\s*)/i);
+    if (m){ cur = {kind: m[1].startsWith(">") ? "quote" : /source/i.test(m[1]) ? "source" : "bullet", text: line.slice(m[0].length)}; blocks.push(cur); continue; }
+    if (cur && cur.kind !== "heading") cur.text += " " + line;
+    else { cur = {kind: "para", text: line}; blocks.push(cur); }
+  }
+  let heading = "", field = null, para = 0, mode = "", comps = [];
+  const sectionFacts = () => facts.filter(f => f._heading === heading);
+  const flushComps = () => {
+    if (!comps.length) return;
+    const shares = comps.map(c => parseFloat((c.match(/(\d+(?:\.\d+)?)\s*%/) || [])[1])).filter(x => !isNaN(x) );
+    const lead = shares.length ? Math.max(...shares) : null;
+    const f = makeFact(`${comps.length} named competitors: ${comps.join("; ")}.`, "", heading || "Top competitors", doc, "top_competitors");
+    if (lead == null){ f.direction = "mixed"; f.how += "; no shares stated, so direction left mixed"; }
+    else if (lead >= 40){ f.direction = "lowers"; f.how += `; a leader holds ${lead}% (dominant leader → lower rivalry)`; }
+    else { f.direction = "raises"; f.how += `; largest share is ${lead}% (no dominant leader → higher rivalry)`; }
+    f._heading = heading; facts.push(f); comps = [];
+  };
+  for (const b of blocks){
+    const clean = b.text.replace(/\*\*|\*|_/g, "").trim();
+    if (b.kind === "heading"){
+      flushComps();
+      heading = clean.replace(/^\d+\.\s*/, "").trim(); para = 0;
+      mode = /^gaps?\b/i.test(heading) ? "gaps" : /^(naics|industry brief)/i.test(heading) ? "skip" : "";
+      field = null; if (!mode) for (const [re, f] of HEADING_TO_FIELD) if (re.test(heading)) { field = f; break; }
       continue;
     }
-    if (field === "__skip") continue;
-    const isQuote = /^>/.test(line);
-    const clean = line.replace(/^>\s*/, "").replace(/^[-*•]\s+/, "").replace(/\*\*|\*|_/g, "").replace(/^"|"$/g, "").trim();
-    if (inGaps){ if (clean) gaps.push(clean); continue; }
-    if (isQuote && facts.length && facts[facts.length - 1]._heading === heading && !facts[facts.length - 1].quote){
-      facts[facts.length - 1].quote = clean.replace(/^[“"]|[”"]$/g, ""); continue;
+    if (mode === "skip") continue;
+    if (mode === "gaps"){ gaps.push(clean); continue; }
+    if (b.kind === "source" || b.kind === "quote"){
+      flushComps();
+      // "IBISWorld Report X, Some section — "quoted text"" → locator + quote
+      const [loc, ...rest] = clean.split(/\s+[—–]\s+/);
+      const quote = (rest.length ? rest.join(" — ") : (b.kind === "quote" ? loc : "")).replace(/^[“"]|[”"]$/g, "").trim();
+      for (const f of sectionFacts()){
+        if (b.kind === "source" && rest.length) f.section += ` (${loc.trim()})`;
+        if (quote && !f.quote) f.quote = quote;
+      }
+      continue;
     }
+    if (b.kind === "bullet" && field === "top_competitors"){ comps.push(clean); continue; }
     para++;
-    const isBullet = /^[-*•]\s+/.test(line);
-    const sentences = clean.split(/(?<=[.!?])\s+(?=[A-Z0-9“"$])/).filter(s => s.length >= (isBullet ? 8 : 25));
+    const sentences = clean.split(/(?<=[.!?])\s+(?=[A-Z0-9“"$])/).filter(s => s.length >= (b.kind === "bullet" ? 8 : 25));
     sentences.forEach((s, i) => {
       const sec = (heading || "Text") + `, ¶${para}` + (sentences.length > 1 ? ` s${i + 1}` : "");
       const f = makeFact(s, "", sec, doc, field); f._heading = heading; facts.push(f);
     });
   }
+  flushComps();
   return {facts, gaps, mode: "text brief"};
 }
 

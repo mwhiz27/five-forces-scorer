@@ -84,6 +84,8 @@ def validate(rules: dict, ev: dict) -> tuple[list[str], list[str], list[dict]]:
 
     for sid, s in sources.items():
         for k in ("doc", "url", "date"):
+            if k == "url" and s.get("type") == "brief":
+                continue  # the brief is inlined into the page, not hosted
             if not has(s.get(k)):
                 warnings.append(f"source {sid}: missing {k}")
 
@@ -129,6 +131,10 @@ def main() -> int:
     here = Path(__file__).parent
     rules = json.loads((here / args.rules).read_text())
     ev = json.loads((here / args.data).read_text())
+    brief = here / "brief.md"
+    if brief.exists():  # powers the "Load example" button on the scorer tab
+        ev["exampleBrief"] = brief.read_text()
+        ev["exampleBriefDoc"] = "Industry Brief (Sept 19, 2026) / IBISWorld 516210"
     errors, warnings, results = validate(rules, ev)
 
     print(c("1", "Five Forces — computed scores"))

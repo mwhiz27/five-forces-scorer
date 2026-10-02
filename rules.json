@@ -11,7 +11,7 @@
       "Low": "fewer than 3 cited facts — the score is shown but should not be relied on"
     }
   },
-  "flipWords": ["declin", "decreas", "slow", "stagnan", "shrink", "fell", "falling", "lower", "limited", "weak", "fragment", "minimal", "no longer", "ended", "withdraw", "bankrupt", "chapter 11", "collapse"],
+  "flipWords": ["low customer", "low concentration", "declin", "decreas", "slow", "stagnan", "shrink", "fell", "falling", "lower", "limited", "weak", "fragment", "minimal", "no longer", "ended", "withdraw", "bankrupt", "chapter 11", "collapse"],
   "forces": [
     {
       "id": "entrants",

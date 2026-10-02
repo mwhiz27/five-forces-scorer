@@ -1,129 +1,589 @@
 {
   "company": {
     "name": "PGA Tour Entertainment Inc.",
-    "industry": "Professional men's golf tours (spectator sports promotion)",
+    "industry": "Live-sports content segment of NAICS 516210 (Media Streaming Distribution, Social Networks & Content Providers)",
     "analysisDate": "2026-10-02",
-    "brief": "Industry brief generated 2026-09-19 with the Industry Brief Generator (Strategic Project)."
+    "brief": "Industry Brief: PGA Tour Entertainment Inc., generated 2026-09-19 from IBISWorld Industry Report 516210."
   },
-  "scope": "The 'industry' is the business of staging elite professional men's golf tours and selling the resulting media rights, sponsorships and tickets. Suppliers are the players (the scarce input); buyers are broadcasters/streamers and sponsors (~63% of 2023 revenue combined); substitutes are other uses of fans' attention and sponsors' budgets; rivals are other tours (LIV Golf, DP World Tour). The four majors are run by independent bodies and are treated as part of the competitive landscape, not the Tour's own product.",
+  "scope": "Industry: NAICS 516210, as defined in the Sept 19 brief. 516210 as a whole is dominated by platforms (Meta 30.5%, Google 20.1%, Amazon 11.9%) that PGA Tour Entertainment does not compete with head-on, so the forces are scored for the segment where it actually sells: live-sports content licensed to streamers and networks, plus the sponsorship sold around it. Suppliers are the players (the scarce input). Buyers are the streamers, networks and sponsors that pay for the content (media and sponsorship were ~63% of 2023 Tour revenue). Rivals are other sports properties competing for the same rights budgets (NFL, NBA, F1, UFC) and other golf tours (LIV, DP World). Substitutes are other uses of viewers' time. The brief's IBISWorld data describes the whole of 516210, so brief facts are cited where they bear on the sports-content segment; company-level gaps the brief itself flagged (PGA Tour financials, rights agreements) are filled from the Form 990s and press sources.",
   "sources": {
-    "S1":  { "doc": "ProPublica Nonprofit Explorer — PGA Tour Inc (EIN 52-0999206), Form 990 filings summary", "url": "https://projects.propublica.org/nonprofits/organizations/520999206", "date": "accessed 2026-10-02", "type": "filing" },
-    "S2":  { "doc": "Paddock Post, \"How Revenue is Spent at PGA Tour, Inc (2023)\" (analysis of the FY2023 Form 990)", "url": "https://paddockpost.com/2025/07/02/how-revenue-is-spent-at-pga-tour-inc-2023/", "date": "2025-07-02", "type": "analysis" },
-    "S3":  { "doc": "PGA TOUR press release, \"PGA TOUR launches PGA TOUR Enterprises, new program that transforms players into equity holders\"", "url": "https://www.pgatour.com/article/news/latest/2024/01/31/pga-tour-launches-pga-tour-enterprises-new-program-that-transforms-players-into-equity-holders", "date": "2024-01-31", "type": "company" },
-    "S4":  { "doc": "PGA TOUR, \"PGA TOUR CEO Brian Rolapp: 'Substantial progress' made toward new competitive model, but work remains\"", "url": "https://www.pgatour.com/article/news/latest/2026/06/03/pga-tour-ceo-brian-rolapp-speaks-memorial-tournament-new-competitive-model-track-1-2-future-competitions-committee", "date": "2026-06-03", "type": "company" },
-    "S5":  { "doc": "GOLF.com (J. Berhow), \"PIF statement: LIV Golf 'no longer consistent' with investment strategy\"", "url": "https://golf.com/news/pif-statement-liv-golf-investment-strategy/", "date": "2026-04-30", "type": "press" },
-    "S6":  { "doc": "CBS Sports (R. Kalland), \"LIV Golf restructures as Saudi Arabia ends funding after 2026 season\"", "url": "https://www.cbssports.com/golf/news/saudi-arabia-liv-golf-funding-2026-season-pga-tour/", "date": "2026-04-30", "type": "press" },
-    "S7":  { "doc": "ESPN (M. Schlabach & P. Uggetti), \"Answering some of the biggest questions around LIV Golf and what comes next\"", "url": "https://www.espn.com/golf/story/_/id/48637510/answering-biggest-question-liv-golf-pga-tour-comes-next", "date": "2026-04-30", "type": "press" },
-    "S8":  { "doc": "Ministry of Sport, \"LIV Golf Files for Chapter 11 Bankruptcy and Restructures Into Player-Owned 'LIV 2.0' Model\"", "url": "https://ministryofsport.com/liv-golf-files-for-chapter-11-bankruptcy-and-restructures-into-player-owned-liv-2-0-model/", "date": "2026-09-09", "type": "press" },
-    "S9":  { "doc": "Sports Video Group (K. Kerschbaumer), \"PGA TOUR Inks Deal Through 2030 With CBS, NBC, ESPN+\"", "url": "https://www.sportsvideo.org/2020/03/09/pga-tour-inks-deal-through-2030-with-cbs-nbc-espn-production-technical-efforts-brought-in-house/", "date": "2020-03-09", "type": "press" },
-    "S10": { "doc": "GOLF.com (J. Colgan), \"PGA Tour and LIV Golf TV ratings reveal striking audience data\"", "url": "https://golf.com/news/pga-tour-liv-tv-ratings-data/", "date": "2025-05-28", "type": "press" },
-    "S11": { "doc": "Heavy via Yahoo Sports (C. Lewis), \"PGA Tour Viewership Increases Continue After 2026 Season\"", "url": "https://sports.yahoo.com/articles/pga-tour-viewership-increases-continue-004407525.html", "date": "2026-09-05", "type": "press" },
-    "S12": { "doc": "Times of San Diego (M. Nero), \"Farmers Insurance is leaving, but Torrey Pines tournament will continue\"", "url": "https://timesofsandiego.com/sports/2026/01/12/farmers-insurance-leaving-torrey-pines-tournament-continue/", "date": "2026-01-12", "type": "press" },
-    "S13": { "doc": "Wikipedia, \"Men's major golf championships\"", "url": "https://en.wikipedia.org/wiki/Men%27s_major_golf_championships", "date": "accessed 2026-10-02", "type": "reference" },
-    "S14": { "doc": "WSC Sports, \"The 2025-2026 Generational Fan Study\"", "url": "https://wsc-sports.com/blog/industry-insights/the-2025-2026-generational-fan-study/", "date": "2025-12-03", "type": "analysis" },
-    "S15": { "doc": "Golfweek / USA TODAY Sports via Yahoo (T. D'Angelo), \"TGL sets season 3 start date against NFL schedule\"", "url": "https://sports.yahoo.com/articles/tgl-sets-season-3-start-131802390.html", "date": "2026-10-01", "type": "press" },
-    "S16": { "doc": "PGA TOUR, \"Signature Events\" overview page", "url": "https://www.pgatour.com/signature-events", "date": "accessed 2026-10-02", "type": "company" }
+    "S0": {
+      "doc": "Industry Brief: PGA Tour Entertainment Inc. (Sept 19, 2026), citing IBISWorld Industry Report 516210",
+      "url": "",
+      "date": "2026-09-19",
+      "type": "brief"
+    },
+    "S1": {
+      "doc": "ProPublica Nonprofit Explorer — PGA Tour Inc (EIN 52-0999206), Form 990 filings summary",
+      "url": "https://projects.propublica.org/nonprofits/organizations/520999206",
+      "date": "accessed 2026-10-02",
+      "type": "filing"
+    },
+    "S2": {
+      "doc": "Paddock Post, \"How Revenue is Spent at PGA Tour, Inc (2023)\" (analysis of the FY2023 Form 990)",
+      "url": "https://paddockpost.com/2025/07/02/how-revenue-is-spent-at-pga-tour-inc-2023/",
+      "date": "2025-07-02",
+      "type": "analysis"
+    },
+    "S3": {
+      "doc": "PGA TOUR press release, \"PGA TOUR launches PGA TOUR Enterprises, new program that transforms players into equity holders\"",
+      "url": "https://www.pgatour.com/article/news/latest/2024/01/31/pga-tour-launches-pga-tour-enterprises-new-program-that-transforms-players-into-equity-holders",
+      "date": "2024-01-31",
+      "type": "company"
+    },
+    "S4": {
+      "doc": "PGA TOUR, \"PGA TOUR CEO Brian Rolapp: 'Substantial progress' made toward new competitive model, but work remains\"",
+      "url": "https://www.pgatour.com/article/news/latest/2026/06/03/pga-tour-ceo-brian-rolapp-speaks-memorial-tournament-new-competitive-model-track-1-2-future-competitions-committee",
+      "date": "2026-06-03",
+      "type": "company"
+    },
+    "S5": {
+      "doc": "GOLF.com (J. Berhow), \"PIF statement: LIV Golf 'no longer consistent' with investment strategy\"",
+      "url": "https://golf.com/news/pif-statement-liv-golf-investment-strategy/",
+      "date": "2026-04-30",
+      "type": "press"
+    },
+    "S6": {
+      "doc": "CBS Sports (R. Kalland), \"LIV Golf restructures as Saudi Arabia ends funding after 2026 season\"",
+      "url": "https://www.cbssports.com/golf/news/saudi-arabia-liv-golf-funding-2026-season-pga-tour/",
+      "date": "2026-04-30",
+      "type": "press"
+    },
+    "S7": {
+      "doc": "ESPN (M. Schlabach & P. Uggetti), \"Answering some of the biggest questions around LIV Golf and what comes next\"",
+      "url": "https://www.espn.com/golf/story/_/id/48637510/answering-biggest-question-liv-golf-pga-tour-comes-next",
+      "date": "2026-04-30",
+      "type": "press"
+    },
+    "S8": {
+      "doc": "Ministry of Sport, \"LIV Golf Files for Chapter 11 Bankruptcy and Restructures Into Player-Owned 'LIV 2.0' Model\"",
+      "url": "https://ministryofsport.com/liv-golf-files-for-chapter-11-bankruptcy-and-restructures-into-player-owned-liv-2-0-model/",
+      "date": "2026-09-09",
+      "type": "press"
+    },
+    "S9": {
+      "doc": "Sports Video Group (K. Kerschbaumer), \"PGA TOUR Inks Deal Through 2030 With CBS, NBC, ESPN+\"",
+      "url": "https://www.sportsvideo.org/2020/03/09/pga-tour-inks-deal-through-2030-with-cbs-nbc-espn-production-technical-efforts-brought-in-house/",
+      "date": "2020-03-09",
+      "type": "press"
+    },
+    "S10": {
+      "doc": "GOLF.com (J. Colgan), \"PGA Tour and LIV Golf TV ratings reveal striking audience data\"",
+      "url": "https://golf.com/news/pga-tour-liv-tv-ratings-data/",
+      "date": "2025-05-28",
+      "type": "press"
+    },
+    "S11": {
+      "doc": "Heavy via Yahoo Sports (C. Lewis), \"PGA Tour Viewership Increases Continue After 2026 Season\"",
+      "url": "https://sports.yahoo.com/articles/pga-tour-viewership-increases-continue-004407525.html",
+      "date": "2026-09-05",
+      "type": "press"
+    },
+    "S12": {
+      "doc": "Times of San Diego (M. Nero), \"Farmers Insurance is leaving, but Torrey Pines tournament will continue\"",
+      "url": "https://timesofsandiego.com/sports/2026/01/12/farmers-insurance-leaving-torrey-pines-tournament-continue/",
+      "date": "2026-01-12",
+      "type": "press"
+    },
+    "S13": {
+      "doc": "Wikipedia, \"Men's major golf championships\"",
+      "url": "https://en.wikipedia.org/wiki/Men%27s_major_golf_championships",
+      "date": "accessed 2026-10-02",
+      "type": "reference"
+    },
+    "S14": {
+      "doc": "WSC Sports, \"The 2025-2026 Generational Fan Study\"",
+      "url": "https://wsc-sports.com/blog/industry-insights/the-2025-2026-generational-fan-study/",
+      "date": "2025-12-03",
+      "type": "analysis"
+    },
+    "S15": {
+      "doc": "Golfweek / USA TODAY Sports via Yahoo (T. D'Angelo), \"TGL sets season 3 start date against NFL schedule\"",
+      "url": "https://sports.yahoo.com/articles/tgl-sets-season-3-start-131802390.html",
+      "date": "2026-10-01",
+      "type": "press"
+    },
+    "S16": {
+      "doc": "PGA TOUR, \"Signature Events\" overview page",
+      "url": "https://www.pgatour.com/signature-events",
+      "date": "accessed 2026-10-02",
+      "type": "company"
+    },
+    "S17": {
+      "doc": "Carl's Place, \"Your Golf Tour: What to Know About YGT\" (undated blog)",
+      "url": "https://www.carlofet.com/blog/ygt-your-golf-tour",
+      "date": "accessed 2026-10-02",
+      "type": "press"
+    }
   },
   "facts": [
-    { "id": "E1", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S5", "section": "PIF statement, paragraphs 1–2",
+    {
+      "id": "E1",
+      "force": "entrants",
+      "driver": "capital",
+      "direction": "lowers",
+      "source": "S5",
+      "section": "PIF statement, paragraphs 1–2",
       "fact": "The best-funded entrant in the sport's history, LIV Golf, absorbed over $5 billion from Saudi Arabia's PIF and its backer still walked away after five seasons.",
-      "quote": "The substantial investment required by LIV Golf over a longer term is no longer consistent with the current phase of PIF's investment strategy." },
-    { "id": "E2", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S7", "section": "\"How much has LIV spent?\" section",
+      "quote": "The substantial investment required by LIV Golf over a longer term is no longer consistent with the current phase of PIF's investment strategy."
+    },
+    {
+      "id": "E2",
+      "force": "entrants",
+      "driver": "capital",
+      "direction": "lowers",
+      "source": "S7",
+      "section": "\"How much has LIV spent?\" section",
       "fact": "LIV was reportedly burning about $100 million a month to compete — the price of entry at the top of the sport.",
-      "quote": "reportedly spending $100 million a month and $40 million per tournament" },
-    { "id": "E3", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S8", "section": "Filing details, paragraphs 1–2",
-      "fact": "LIV Golf filed for Chapter 11 in the U.S. Bankruptcy Court for New Jersey in September 2026, unable to pay marquee players; Rahm, DeChambeau and Johnson each hold unsecured claims above $5 million." },
-    { "id": "E4", "force": "entrants", "driver": "access", "direction": "lowers", "source": "S9", "section": "Deal summary, paragraphs 1–3",
-      "fact": "The Tour's U.S. broadcast windows are locked in nine-year agreements through 2030 with CBS (~19 events/yr), NBC (~8) and ESPN+ (exclusive PGA TOUR LIVE), leaving little premium distribution for an entrant." },
-    { "id": "E5", "force": "entrants", "driver": "access", "direction": "lowers", "source": "S10", "section": "Head-to-head Sundays, paragraphs 2–4",
+      "quote": "reportedly spending $100 million a month and $40 million per tournament"
+    },
+    {
+      "id": "E3",
+      "force": "entrants",
+      "driver": "capital",
+      "direction": "lowers",
+      "source": "S8",
+      "section": "Filing details, paragraphs 1–2",
+      "fact": "LIV Golf filed for Chapter 11 in the U.S. Bankruptcy Court for New Jersey in September 2026, unable to pay marquee players; Rahm, DeChambeau and Johnson each hold unsecured claims above $5 million."
+    },
+    {
+      "id": "E4",
+      "force": "entrants",
+      "driver": "access",
+      "direction": "lowers",
+      "source": "S9",
+      "section": "Deal summary, paragraphs 1–3",
+      "fact": "The Tour's U.S. broadcast windows are locked in nine-year agreements through 2030 with CBS (~19 events/yr), NBC (~8) and ESPN+ (exclusive PGA TOUR LIVE), leaving little premium distribution for an entrant."
+    },
+    {
+      "id": "E5",
+      "force": "entrants",
+      "driver": "access",
+      "direction": "lowers",
+      "source": "S10",
+      "section": "Head-to-head Sundays, paragraphs 2–4",
       "fact": "Even with $5B behind it, LIV averaged 175,000 viewers against the PGA Tour's 3.1 million across seven head-to-head Sundays — a 17.78× audience gap.",
-      "quote": "PGA Tour: 3.1 million average viewers (CBS/NBC) ... LIV Golf: 175,000 average viewers (FOX/FS1/FS2)" },
-    { "id": "E6", "force": "entrants", "driver": "retaliation", "direction": "lowers", "source": "S6", "section": "\"What happens to star players?\" section",
+      "quote": "PGA Tour: 3.1 million average viewers (CBS/NBC) ... LIV Golf: 175,000 average viewers (FOX/FS1/FS2)"
+    },
+    {
+      "id": "E6",
+      "force": "entrants",
+      "driver": "retaliation",
+      "direction": "lowers",
+      "source": "S6",
+      "section": "\"What happens to star players?\" section",
       "fact": "The incumbent signals it will punish defection: PGA Tour CEO Brian Rolapp says reinstatement of LIV players will not be automatic.",
-      "quote": "There were rules, and they were broken. With rules comes accountability." },
-    { "id": "E7", "force": "entrants", "driver": "recent", "direction": "raises", "source": "S15", "section": "Season 2 viewership & ESPN deal, paragraphs 2–4",
-      "fact": "A new format did get in: TGL (TMRW Sports, co-founded by Woods and McIlroy) drew 21.8 million total viewers in season 2 (+8%), renewed with ESPN and is expanding to seven teams." },
-    { "id": "E8", "force": "entrants", "driver": "recent", "direction": "raises", "source": "S8", "section": "New structure, paragraph 3",
+      "quote": "There were rules, and they were broken. With rules comes accountability."
+    },
+    {
+      "id": "E7",
+      "force": "entrants",
+      "driver": "recent",
+      "direction": "raises",
+      "source": "S15",
+      "section": "Season 2 viewership & ESPN deal, paragraphs 2–4",
+      "fact": "A new format did get in: TGL (TMRW Sports, co-founded by Woods and McIlroy) drew 21.8 million total viewers in season 2 (+8%), renewed with ESPN and is expanding to seven teams."
+    },
+    {
+      "id": "E8",
+      "force": "entrants",
+      "driver": "recent",
+      "direction": "raises",
+      "source": "S8",
+      "section": "New structure, paragraph 3",
       "fact": "LIV is trying to re-enter as \"LIV 2.0\" — backed by BC Partners' credit arm, majority player-owned, with 75-player fields across five continents.",
-      "quote": "We are entering this process with a clear plan and the support of BC Partners" },
-
-    { "id": "P1", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S2", "section": "Expenses table (FY2023 Form 990, functional expenses)",
-      "fact": "Payments to players (\"fees for services\" — prizes and benefits) were $833 million, 46% of the Tour's 2023 expenses: the single largest cost by far." },
-    { "id": "P2", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S2", "section": "Key finding",
-      "fact": "The Tour spent $104 for every $100 of revenue in 2023, a $62 million deficit — the talent captured more than the whole surplus." },
-    { "id": "P3", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S16", "section": "Signature Events overview, paragraph 1",
+      "quote": "We are entering this process with a clear plan and the support of BC Partners"
+    },
+    {
+      "id": "P1",
+      "force": "suppliers",
+      "driver": "costshare",
+      "direction": "raises",
+      "source": "S2",
+      "section": "Expenses table (FY2023 Form 990, functional expenses)",
+      "fact": "Payments to players (\"fees for services\" — prizes and benefits) were $833 million, 46% of the Tour's 2023 expenses: the single largest cost by far."
+    },
+    {
+      "id": "P2",
+      "force": "suppliers",
+      "driver": "costshare",
+      "direction": "raises",
+      "source": "S2",
+      "section": "Key finding",
+      "fact": "The Tour spent $104 for every $100 of revenue in 2023, a $62 million deficit — the talent captured more than the whole surplus."
+    },
+    {
+      "id": "P3",
+      "force": "suppliers",
+      "driver": "costshare",
+      "direction": "raises",
+      "source": "S16",
+      "section": "Signature Events overview, paragraph 1",
       "fact": "Eight 2026 Signature Events pay $20 million purses with limited fields, five of them with no cut — guaranteed money for the top players.",
-      "quote": "limited-field events featuring top players with increased prize money ($20 million)" },
-    { "id": "P4", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S3", "section": "Player equity program, paragraph 3",
+      "quote": "limited-field events featuring top players with increased prize money ($20 million)"
+    },
+    {
+      "id": "P4",
+      "force": "suppliers",
+      "driver": "integration",
+      "direction": "raises",
+      "source": "S3",
+      "section": "Player equity program, paragraph 3",
       "fact": "Nearly 200 players became equity holders in PGA TOUR Enterprises, collectively granted over $1.5 billion in equity — suppliers now own part of the buyer.",
-      "quote": "over $1.5 billion in equity in PGA TOUR Enterprises" },
-    { "id": "P5", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S1", "section": "FY2024 filing — compensation of officers/directors",
-      "fact": "Players sit on the board and top the compensation list: player directors Tiger Woods ($18.3M) and Jordan Spieth ($10.1M) out-earned the commissioner ($8.6M) on the FY2024 990." },
-    { "id": "P6", "force": "suppliers", "driver": "concentration", "direction": "raises", "source": "S4", "section": "Postseason format & Committee work",
+      "quote": "over $1.5 billion in equity in PGA TOUR Enterprises"
+    },
+    {
+      "id": "P5",
+      "force": "suppliers",
+      "driver": "integration",
+      "direction": "raises",
+      "source": "S1",
+      "section": "FY2024 filing — compensation of officers/directors",
+      "fact": "Players sit on the board and top the compensation list: player directors Tiger Woods ($18.3M) and Jordan Spieth ($10.1M) out-earned the commissioner ($8.6M) on the FY2024 990."
+    },
+    {
+      "id": "P6",
+      "force": "suppliers",
+      "driver": "concentration",
+      "direction": "raises",
+      "source": "S4",
+      "section": "Postseason format & Committee work",
       "fact": "The Tour's own CEO concedes product design runs through the players: the Future Competition Committee held 14 full meetings with player representatives.",
-      "quote": "if it doesn't feel authentic to the players...it's not going to feel authentic to anybody" },
-    { "id": "P7", "force": "suppliers", "driver": "alternatives", "direction": "lowers", "source": "S8", "section": "Player status, final paragraph",
-      "fact": "Players' best outside option has collapsed: LIV's multi-year contracts will be terminated through the bankruptcy, and stars are unsecured creditors." },
-    { "id": "P8", "force": "suppliers", "driver": "alternatives", "direction": "lowers", "source": "S5", "section": "PIF statement, paragraph 1",
+      "quote": "if it doesn't feel authentic to the players...it's not going to feel authentic to anybody"
+    },
+    {
+      "id": "P7",
+      "force": "suppliers",
+      "driver": "alternatives",
+      "direction": "lowers",
+      "source": "S8",
+      "section": "Player status, final paragraph",
+      "fact": "Players' best outside option has collapsed: LIV's multi-year contracts will be terminated through the bankruptcy, and stars are unsecured creditors."
+    },
+    {
+      "id": "P8",
+      "force": "suppliers",
+      "driver": "alternatives",
+      "direction": "lowers",
+      "source": "S5",
+      "section": "PIF statement, paragraph 1",
       "fact": "The sole funder of the rival bidder for talent will fund LIV \"only for the remainder of the 2026 season,\" removing the nine-figure contracts that gave players leverage.",
-      "quote": "PIF has made the decision to fund LIV Golf only for the remainder of the 2026 season." },
-    { "id": "P9", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S15", "section": "Ownership, paragraph 3",
-      "fact": "The two biggest draws, Woods and McIlroy, co-founded their own league (TGL), showing the top suppliers can integrate forward." },
-
-    { "id": "B1", "force": "buyers", "driver": "concentration", "direction": "raises", "source": "S9", "section": "Deal summary, paragraph 1",
-      "fact": "All U.S. TV and streaming rights are held by just three buyers — CBS, NBC and Disney/ESPN+." },
-    { "id": "B2", "force": "buyers", "driver": "concentration", "direction": "raises", "source": "S2", "section": "Revenue table (FY2023 Form 990)",
-      "fact": "Media rights were $731M of ~$1.8B 2023 revenue (about 40%), and sponsorship another $422M — two buyer groups fund roughly two-thirds of the Tour." },
-    { "id": "B3", "force": "buyers", "driver": "switching", "direction": "lowers", "source": "S9", "section": "Financial impact paragraph",
-      "fact": "Rights fees rose about 60% in the 2022–2030 deal and are locked for nine years, so broadcasters cannot renegotiate before 2030." },
-    { "id": "B4", "force": "buyers", "driver": "switching", "direction": "mixed", "source": "S4", "section": "Media rights & strategic alliances",
-      "fact": "The lock-in is ending: current media contracts expire in 2030 and the Tour plans to negotiate successor deals early, which reopens buyer leverage." },
-    { "id": "B5", "force": "buyers", "driver": "pricesens", "direction": "raises", "source": "S12", "section": "Key details, paragraphs 1–2",
-      "fact": "Farmers Insurance is ending its 16-year title sponsorship of the Torrey Pines event after 2026, with no replacement sponsor named." },
-    { "id": "B6", "force": "buyers", "driver": "pricesens", "direction": "lowers", "source": "S4", "section": "Financial context",
-      "fact": "Sponsor demand is still deep: $1.2B of contractual revenue across 36 partners in 2025, and $347M from 13 new partner deals in 2026." },
-    { "id": "B7", "force": "buyers", "driver": "alternatives", "direction": "lowers", "source": "S10", "section": "Network performance gap",
-      "fact": "Networks have no comparable golf property to switch to: the PGA Tour's broadcast audience is 6.5× LIV's on network TV and 5× on cable (506K vs 101K)." },
-    { "id": "B8", "force": "buyers", "driver": "alternatives", "direction": "lowers", "source": "S11", "section": "Signature events & regular season figures",
-      "fact": "The product is gaining audience: the 2026 Players Championship drew 4.4M (+15%) and the Tour Championship final round 5.37M, the most since 2018." },
-
-    { "id": "U1", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S14", "section": "Key statistics — streaming dominance",
+      "quote": "PIF has made the decision to fund LIV Golf only for the remainder of the 2026 season."
+    },
+    {
+      "id": "P9",
+      "force": "suppliers",
+      "driver": "integration",
+      "direction": "raises",
+      "source": "S15",
+      "section": "Ownership, paragraph 3",
+      "fact": "The two biggest draws, Woods and McIlroy, co-founded their own league (TGL), showing the top suppliers can integrate forward."
+    },
+    {
+      "id": "B1",
+      "force": "buyers",
+      "driver": "concentration",
+      "direction": "raises",
+      "source": "S9",
+      "section": "Deal summary, paragraph 1",
+      "fact": "All U.S. TV and streaming rights are held by just three buyers — CBS, NBC and Disney/ESPN+."
+    },
+    {
+      "id": "B2",
+      "force": "buyers",
+      "driver": "concentration",
+      "direction": "raises",
+      "source": "S2",
+      "section": "Revenue table (FY2023 Form 990)",
+      "fact": "Media rights were $731M of ~$1.8B 2023 revenue (about 40%), and sponsorship another $422M — two buyer groups fund roughly two-thirds of the Tour."
+    },
+    {
+      "id": "B3",
+      "force": "buyers",
+      "driver": "switching",
+      "direction": "lowers",
+      "source": "S9",
+      "section": "Financial impact paragraph",
+      "fact": "Rights fees rose about 60% in the 2022–2030 deal and are locked for nine years, so broadcasters cannot renegotiate before 2030."
+    },
+    {
+      "id": "B4",
+      "force": "buyers",
+      "driver": "switching",
+      "direction": "mixed",
+      "source": "S4",
+      "section": "Media rights & strategic alliances",
+      "fact": "The lock-in is ending: current media contracts expire in 2030 and the Tour plans to negotiate successor deals early, which reopens buyer leverage."
+    },
+    {
+      "id": "B5",
+      "force": "buyers",
+      "driver": "pricesens",
+      "direction": "raises",
+      "source": "S12",
+      "section": "Key details, paragraphs 1–2",
+      "fact": "Farmers Insurance is ending its 16-year title sponsorship of the Torrey Pines event after 2026, with no replacement sponsor named."
+    },
+    {
+      "id": "B6",
+      "force": "buyers",
+      "driver": "pricesens",
+      "direction": "lowers",
+      "source": "S4",
+      "section": "Financial context",
+      "fact": "Sponsor demand is still deep: $1.2B of contractual revenue across 36 partners in 2025, and $347M from 13 new partner deals in 2026."
+    },
+    {
+      "id": "B7",
+      "force": "buyers",
+      "driver": "alternatives",
+      "direction": "lowers",
+      "source": "S10",
+      "section": "Network performance gap",
+      "fact": "Networks have no comparable golf property to switch to: the PGA Tour's broadcast audience is 6.5× LIV's on network TV and 5× on cable (506K vs 101K)."
+    },
+    {
+      "id": "B8",
+      "force": "buyers",
+      "driver": "alternatives",
+      "direction": "lowers",
+      "source": "S11",
+      "section": "Signature events & regular season figures",
+      "fact": "The product is gaining audience: the 2026 Players Championship drew 4.4M (+15%) and the Tour Championship final round 5.37M, the most since 2018."
+    },
+    {
+      "id": "U1",
+      "force": "substitutes",
+      "driver": "availability",
+      "direction": "raises",
+      "source": "S14",
+      "section": "Key statistics — streaming dominance",
       "fact": "Streaming is now the main sports destination for 65% of Millennials and 55% of Gen Z, where golf competes with every other sport and creator on one screen.",
-      "quote": "65 percent of Millennials and 55 percent of Gen Z selecting it as their main sports destination" },
-    { "id": "U2", "force": "substitutes", "driver": "priceperf", "direction": "raises", "source": "S14", "section": "Short-form video discovery",
+      "quote": "65 percent of Millennials and 55 percent of Gen Z selecting it as their main sports destination"
+    },
+    {
+      "id": "U2",
+      "force": "substitutes",
+      "driver": "priceperf",
+      "direction": "raises",
+      "source": "S14",
+      "section": "Short-form video discovery",
       "fact": "62% of fans discovered a new team, player or league through short-form video — free, two-minute clips substitute for a four-hour broadcast.",
-      "quote": "62% of fans discovered a new team, player, or league through short-form video" },
-    { "id": "U3", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S13", "section": "Significance",
+      "quote": "62% of fans discovered a new team, player, or league through short-form video"
+    },
+    {
+      "id": "U3",
+      "force": "substitutes",
+      "driver": "availability",
+      "direction": "raises",
+      "source": "S13",
+      "section": "Significance",
       "fact": "Golf's biggest events are not the Tour's product — independent bodies (Augusta National, PGA of America, USGA, The R&A) run all four majors.",
-      "quote": "Independent organizations, and not the PGA Tour, operate each of the majors." },
-    { "id": "U4", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S11", "section": "Major championships",
-      "fact": "The 2026 Masters final round drew ~14 million viewers versus a 2.7 million Tour regular-season average — fans' and sponsors' golf attention concentrates on events the Tour does not own." },
-    { "id": "U5", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S15", "section": "Season 2 viewership; season 3 date",
-      "fact": "TGL, an arena-style golf format on ESPN, drew 21.8M total viewers in season 2 and deliberately schedules against the NFL — a made-for-TV substitute for traditional tour golf." },
-    { "id": "U6", "force": "substitutes", "driver": "switching", "direction": "lowers", "source": "S11", "section": "Additional metrics",
-      "fact": "Engagement is deepening: total money wagered on Tour events rose 30% in 2026, a habit that ties viewers to the live product." },
-
-    { "id": "R1", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S8", "section": "Filing details",
-      "fact": "The only well-funded rival tour, LIV Golf, is in Chapter 11 with more than $500 million in debt." },
-    { "id": "R2", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S6", "section": "Financial struggles",
-      "fact": "LIV was losing an estimated $500–600 million a year and postponed its New Orleans event even before filing." },
-    { "id": "R3", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S4", "section": "Media rights & strategic alliances",
-      "fact": "The other major tour is a partner, not a rival: the PGA Tour and DP World Tour are working to \"renew and improve\" their Strategic Alliance." },
-    { "id": "R4", "force": "rivalry", "driver": "number", "direction": "raises", "source": "S8", "section": "New structure",
-      "fact": "Rivalry is not over: LIV 2.0 plans global expansion across five continents with 75-player fields, cuts and Monday qualifiers." },
-    { "id": "R5", "force": "rivalry", "driver": "costs", "direction": "raises", "source": "S2", "section": "Key finding / expenses table",
-      "fact": "The bidding war for players left the Tour itself spending $104 per $100 of revenue in 2023, with player payments 46% of costs." },
-    { "id": "R6", "force": "rivalry", "driver": "costs", "direction": "raises", "source": "S7", "section": "\"How much has LIV spent?\" section",
-      "fact": "LIV's spend of ~$40 million per tournament set a cost floor the Tour had to answer with $20M signature purses." },
-    { "id": "R7", "force": "rivalry", "driver": "growth", "direction": "mixed", "source": "S11", "section": "Regular season",
-      "fact": "The core audience is mature: regular-season viewership grew only 1% in 2026 (2.7M vs 2.6M on Nielsen Big Data)." },
-    { "id": "R8", "force": "rivalry", "driver": "differentiation", "direction": "lowers", "source": "S10", "section": "Head-to-head Sundays",
-      "fact": "The PGA Tour's product is clearly differentiated in fans' eyes — 17.78× LIV's audience when both played the same Sunday." }
+      "quote": "Independent organizations, and not the PGA Tour, operate each of the majors."
+    },
+    {
+      "id": "U4",
+      "force": "substitutes",
+      "driver": "availability",
+      "direction": "raises",
+      "source": "S11",
+      "section": "Major championships",
+      "fact": "The 2026 Masters final round drew ~14 million viewers versus a 2.7 million Tour regular-season average — fans' and sponsors' golf attention concentrates on events the Tour does not own."
+    },
+    {
+      "id": "U5",
+      "force": "substitutes",
+      "driver": "availability",
+      "direction": "raises",
+      "source": "S15",
+      "section": "Season 2 viewership; season 3 date",
+      "fact": "TGL, an arena-style golf format on ESPN, drew 21.8M total viewers in season 2 and deliberately schedules against the NFL — a made-for-TV substitute for traditional tour golf."
+    },
+    {
+      "id": "U6",
+      "force": "substitutes",
+      "driver": "switching",
+      "direction": "lowers",
+      "source": "S11",
+      "section": "Additional metrics",
+      "fact": "Engagement is deepening: total money wagered on Tour events rose 30% in 2026, a habit that ties viewers to the live product."
+    },
+    {
+      "id": "R1",
+      "force": "rivalry",
+      "driver": "number",
+      "direction": "lowers",
+      "source": "S8",
+      "section": "Filing details",
+      "fact": "The only well-funded rival tour, LIV Golf, is in Chapter 11 with more than $500 million in debt."
+    },
+    {
+      "id": "R2",
+      "force": "rivalry",
+      "driver": "number",
+      "direction": "lowers",
+      "source": "S6",
+      "section": "Financial struggles",
+      "fact": "LIV was losing an estimated $500–600 million a year and postponed its New Orleans event even before filing."
+    },
+    {
+      "id": "R3",
+      "force": "rivalry",
+      "driver": "number",
+      "direction": "lowers",
+      "source": "S4",
+      "section": "Media rights & strategic alliances",
+      "fact": "The other major tour is a partner, not a rival: the PGA Tour and DP World Tour are working to \"renew and improve\" their Strategic Alliance."
+    },
+    {
+      "id": "R4",
+      "force": "rivalry",
+      "driver": "number",
+      "direction": "raises",
+      "source": "S8",
+      "section": "New structure",
+      "fact": "Rivalry is not over: LIV 2.0 plans global expansion across five continents with 75-player fields, cuts and Monday qualifiers."
+    },
+    {
+      "id": "R5",
+      "force": "rivalry",
+      "driver": "costs",
+      "direction": "raises",
+      "source": "S2",
+      "section": "Key finding / expenses table",
+      "fact": "The bidding war for players left the Tour itself spending $104 per $100 of revenue in 2023, with player payments 46% of costs."
+    },
+    {
+      "id": "R6",
+      "force": "rivalry",
+      "driver": "costs",
+      "direction": "raises",
+      "source": "S7",
+      "section": "\"How much has LIV spent?\" section",
+      "fact": "LIV's spend of ~$40 million per tournament set a cost floor the Tour had to answer with $20M signature purses."
+    },
+    {
+      "id": "R7",
+      "force": "rivalry",
+      "driver": "growth",
+      "direction": "mixed",
+      "source": "S11",
+      "section": "Regular season",
+      "fact": "The core audience is mature: regular-season viewership grew only 1% in 2026 (2.7M vs 2.6M on Nielsen Big Data)."
+    },
+    {
+      "id": "R8",
+      "force": "rivalry",
+      "driver": "differentiation",
+      "direction": "lowers",
+      "source": "S10",
+      "section": "Head-to-head Sundays",
+      "fact": "The PGA Tour's product is clearly differentiated in fans' eyes — 17.78× LIV's audience when both played the same Sunday."
+    },
+    {
+      "id": "E9",
+      "force": "entrants",
+      "driver": "access",
+      "direction": "lowers",
+      "source": "S0",
+      "section": "§4 Supply Chain (IBISWorld 516210, Supply Chain section)",
+      "fact": "Premium sports rights are being locked up in exclusive deals, so a new content provider faces a shrinking set of well-capitalized buyers willing to carry it.",
+      "quote": "Smaller cable and streaming operators face a contracting pool of premium licensable content as exclusive deals lock up categories."
+    },
+    {
+      "id": "E10",
+      "force": "entrants",
+      "driver": "retaliation",
+      "direction": "mixed",
+      "source": "S0",
+      "section": "§3 Regulatory & Compliance (IBISWorld 516210, Regulation & Policy section)",
+      "fact": "Regulatory pressure in 516210 (FTC surveillance report, COPPA 2.0, TAKE IT DOWN Act) falls mainly on platforms, not on sports content providers — so regulation is neither a real barrier nor an opening for a new golf property.",
+      "quote": "Compliance obligations for social media platforms are expanding with the 2025 TAKE IT DOWN Act"
+    },
+    {
+      "id": "E11",
+      "force": "entrants",
+      "driver": "recent",
+      "direction": "raises",
+      "source": "S17",
+      "section": "Format & prize money; Broadcasting",
+      "fact": "YouTube has made low-cost entry possible: creator-led Your Golf Tour (YGT), founded by Grant Horvat, Wesley and George Bryan and Brad Dalke, runs 16-player team events with $500,000 team purses and a $1M finale, distributed free on YouTube.",
+      "quote": "Episodes are released across the Grant Horvat Golf, Bryan Bros Golf and official YGT YouTube channels"
+    },
+    {
+      "id": "B9",
+      "force": "buyers",
+      "driver": "concentration",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§4 Supply Chain (IBISWorld 516210, Supply Chain section)",
+      "fact": "Streaming platforms committed $14.2 billion to sports rights in 2026, concentrating premium sports content among \"a shrinking pool of well-capitalized buyers.\""
+    },
+    {
+      "id": "B10",
+      "force": "buyers",
+      "driver": "concentration",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§2 Top Competitors (IBISWorld 516210, Major Companies section)",
+      "fact": "Three firms — Meta (30.5%), Google (20.1%) and Amazon (11.9%) — hold 62.5% of 516210 revenue; Amazon and Google (YouTube) are also among the few platforms able to bid for live sports rights.",
+      "quote": "Meta ($95.2bn) 30.5%... Google ($62.9bn) 20.1%... Amazon ($37.2bn) 11.9%"
+    },
+    {
+      "id": "B11",
+      "force": "buyers",
+      "driver": "pricesens",
+      "direction": "lowers",
+      "source": "S0",
+      "section": "§6 Biggest Trend (IBISWorld 516210, Industry Outlook section)",
+      "fact": "Buyers are spending more on sports, not less: streaming sports-rights spend rose from $13.2B (2025) to $14.2B (2026) because live sports are the main way platforms compete.",
+      "quote": "Live sports have become the defining competitive battleground for US streaming platforms"
+    },
+    {
+      "id": "B12",
+      "force": "buyers",
+      "driver": "pricesens",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§7 Biggest Threat (IBISWorld 516210, Key External Drivers section)",
+      "fact": "The Tour's broadcast buyers are under margin pressure: TV airtime prices fell nearly 8% in 2025 (five-year CAGR −10.6%) and cable subscriptions are declining ~2.4% a year, so CBS and NBC have less ad revenue to fund rights fees.",
+      "quote": "TV airtime prices plunged nearly 8% in 2025."
+    },
+    {
+      "id": "U7",
+      "force": "substitutes",
+      "driver": "switching",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§5 Customer Concentration (IBISWorld 516210, Demand Determinants)",
+      "fact": "Viewers face low switching costs across a fragmented audience — IBISWorld rates end-buyer power high and rising for that reason, so a golf viewer can switch to any other stream at no cost.",
+      "quote": "Low Customer Class Concentration... Adults aged 18 to 29: Online streaming ($57.5bn) 18.4%"
+    },
+    {
+      "id": "R9",
+      "force": "rivalry",
+      "driver": "growth",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§1 Industry Size & Growth (IBISWorld 516210, Industry at a Glance)",
+      "fact": "516210 revenue ($312.6B) grew at only a 0.6% CAGR over five years, so sports properties fight over a nearly flat pool of media spending.",
+      "quote": "helping industry-wide revenue inch forward at a CAGR of 0.6% to $312.1 billion over the past five years"
+    },
+    {
+      "id": "R10",
+      "force": "rivalry",
+      "driver": "number",
+      "direction": "raises",
+      "source": "S0",
+      "section": "§6 Biggest Trend (IBISWorld 516210, Industry Outlook section)",
+      "fact": "Golf competes for the same streaming rights budgets as the NBA, NFL, Formula 1, UFC and WWE, all of which have signed landmark exclusive multi-year deals.",
+      "quote": "Streaming services will collectively spend $14.2 billion on sports rights in 2026, up from $13.2 billion in 2025"
+    }
   ],
   "analysis": {
     "entrants": {
       "score": 2,
-      "rationale": "Entry is technically possible — TGL got in and LIV is trying again — but the one full-scale entrant spent over $5 billion, won a fraction of the audience and is now in bankruptcy. Capital, locked-up distribution through 2030 and an incumbent that punishes defectors make the barriers high, so the threat is weak; it is a 2 rather than a 1 only because niche formats like TGL show the edges are still open."
+      "rationale": "Entry is possible at the cheap end — YouTube creators launched Your Golf Tour and TGL got onto ESPN — but the one full-scale entrant spent over $5 billion, won a fraction of the audience and is now in bankruptcy. Capital, premium distribution locked up through 2030 and an incumbent that punishes defectors keep the threat to the Tour's profit weak; it is a 2 rather than a 1 because low-cost creator formats show the edges are open."
     },
     "suppliers": {
       "score": 4,
@@ -131,23 +591,24 @@
     },
     "buyers": {
       "score": 3,
-      "rationale": "Three broadcasters buy all U.S. media rights and media plus sponsorship fund about two-thirds of revenue, so buyers are concentrated. But they are locked in through 2030, have no comparable golf property to switch to, and sponsors replacing departing ones (13 new deals worth $347M in 2026) offsets exits like Farmers. The raw score sits exactly between 2 and 3; it rounds up because the 2030 renewal is the moment buyer leverage returns."
+      "rationale": "Buyers are concentrated: three networks hold all US Tour rights, a shrinking pool of well-capitalized streamers holds premium sports, and their own ad businesses are under pressure (TV airtime prices −8% in 2025). Offsetting that, they are locked in through 2030, have no comparable golf property, and are raising sports spend ($13.2B to $14.2B) because live sports are how they compete. The raw score sits exactly between 2 and 3; it rounds up because the 2030 renewal is the moment buyer leverage returns."
     },
     "substitutes": {
       "score": 4,
-      "rationale": "The Tour competes for attention with every streaming sport, two-minute clip and creator — and even within golf, the biggest audiences go to majors it does not own and to new formats like TGL. Rising betting engagement is the one thing tying fans to the live product; it pulls the raw score to 3.7, between a 3 and a 4, and it rounds to 4 because four separate substitutes are already taking audience."
+      "rationale": "The Tour competes for attention with every streaming sport, two-minute clip and creator, viewers can switch at no cost, and even within golf the biggest audiences go to majors it does not own and to new formats like TGL. The raw score is 4.3 — between a 4 and a 5 — and it rounds down to 4 because rising betting engagement gives fans a real reason to stay with the live product."
     },
     "rivalry": {
       "score": 3,
-      "rationale": "On structure alone rivalry is low: the only funded rival is in Chapter 11, the DP World Tour is an ally, and the PGA Tour draws 17× LIV's audience. What keeps it at a 3 is the cost legacy of the war — $20M purses and a spending base the Tour cannot easily unwind — plus a LIV 2.0 that may yet re-emerge. The raw score falls between 2 and 3; it rounds up toward the stronger force."
+      "rationale": "Golf-on-golf rivalry is fading — LIV is in Chapter 11, the DP World Tour is an ally, and the PGA Tour draws 17× LIV's audience. But in 516210 the Tour also competes with the NFL, NBA, F1 and UFC for a nearly flat media pool (0.6% CAGR), and the cost legacy of the LIV war ($20M purses, a 2023 deficit) has not unwound. Those pull in opposite directions and land at 3."
     },
-    "overall": "Total 16 of 25: a moderately unattractive industry for anyone hoping to earn a profit staging tour golf, and the reason is not rivals — it is the talent and the fight for attention. Supplier power (4) is the dominant force: the players are the product, they take nearly half of the Tour's costs, and they now own equity and sit on the board. Substitutes (4) are the second: fans' time is contested by streaming, short-form video, majors the Tour does not own and new formats like TGL. LIV's collapse lowered rivalry and proved entry barriers are high, which helps, but it does not change who captures the money. The industry is attractive for the players and for owners of scarce events (the majors) more than for the tour operator itself.",
+    "overall": "Total 16 of 25: the live-sports content segment of 516210 is moderately unattractive for a content owner like PGA Tour Entertainment, and the reason is not rivals — it is the talent and the fight for attention. Supplier power (4) dominates: the players are the product, take nearly half of the Tour's costs, and now own equity and sit on the board. Substitutes (4) are second: viewers can switch to any stream, short-form clip or creator at no cost, and YouTube-native golf like Your Golf Tour shows how cheaply that content can be made. Buyer power is held at 3 only because streamers are spending more on live sports each year ($14.2B in 2026), and that support depends on renewing rights in 2030. LIV's collapse lowered rivalry and proved entry barriers are high at the top end, but it did not change who captures the money.",
     "leastConfident": {
       "force": "rivalry",
-      "why": "Rivalry is changing month to month: LIV filed for Chapter 11 on September 8, 2026, and whether a player-owned LIV 2.0 emerges with a real calendar decides whether this is a 2 or a 4. Two of its four drivers rest on 2023–2025 numbers that predate the bankruptcy.",
-      "settle": "Three pieces of evidence would settle it: (1) the confirmed LIV 2.0 reorganization plan and its 2027 schedule from the New Jersey bankruptcy docket; (2) how many top-50 world-ranked players sign with LIV 2.0 versus seek PGA Tour reinstatement; and (3) the PGA Tour's FY2025 Form 990 / PGA TOUR Enterprises financials showing whether purses and player spending fall once the bidding war ends."
+      "why": "Rivalry is changing month to month: LIV filed for Chapter 11 on September 8, 2026, and whether a player-owned LIV 2.0 emerges with a real calendar decides whether golf-on-golf rivalry is near zero or back to intense. The brief also gives no sports-segment data — its competitor list (Meta, Google, Amazon) describes platforms, not the sports properties the Tour actually competes with for rights money.",
+      "settle": "Four pieces of evidence would settle it: (1) the confirmed LIV 2.0 reorganization plan and 2027 schedule from the New Jersey bankruptcy docket; (2) how many top-50 world-ranked players sign with LIV 2.0 versus seek PGA Tour reinstatement; (3) a sports-rights share breakdown (e.g. Ampere Analysis, which IBISWorld cites) showing golf's share of the $14.2B versus the NFL, NBA and F1; and (4) PGA TOUR Enterprises financials showing whether purses fall once the bidding war ends."
     },
     "limits": [
+      "The brief's IBISWorld report covers all of 516210, where Meta, Google and Amazon are 62.5% of revenue. Its facts are cited only where they bear on live-sports content (rights spend, buyer pressure, switching costs); the brief itself flagged PGA Tour financials and rights deals as NOT FOUND, so those come from the Form 990s and press sources.",
       "Scores come from counted evidence, not weighted evidence: one Form 990 line and one press anecdote each move a driver by one step. The analyst picks which facts to include, so selection bias is the main risk.",
       "Since 2024 most commercial activity moved into PGA TOUR Enterprises (a for-profit entity that does not file a 990) — the FY2024 990 shows revenue of only $760.6M versus $1.83B in 2023. Cost-share facts therefore use FY2023, the last complete year.",
       "Several facts come from press coverage of fast-moving events (LIV bankruptcy) rather than court filings; they should be refreshed against the docket before any decision.",
