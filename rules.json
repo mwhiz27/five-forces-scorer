@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "scale": {
+    "ratingValues": { "Low": 1, "Medium": 2, "High": 3 },
+    "formula": "score = 1 + 2 × (average driver rating − 1), where Low = 1, Medium = 2, High = 3. An average of 1.0 maps to 1, 2.0 to 3, 3.0 to 5.",
+    "rounding": "Whole numbers only. A raw score that lands on a half (e.g. 2.5) rounds UP, toward the stronger force — a deliberately conservative bias for anyone deciding whether to enter or invest. Any raw score with a fractional part between .33 and .67 is flagged as a tension and named in the rationale.",
+    "driverRule": "Each driver is rated from the net direction of its cited facts: more facts that raise the force than lower it → High; balanced or only mixed facts → Medium; more that lower it → Low. A driver with no cited facts is left unrated and drops out of the average.",
+    "confidence": {
+      "High": "4+ cited facts from 3+ distinct documents",
+      "Medium": "3 cited facts, or 4+ from fewer than 3 documents",
+      "Low": "fewer than 3 cited facts — the score is shown but should not be relied on"
+    }
+  },
+  "flipWords": ["declin", "decreas", "slow", "stagnan", "shrink", "fell", "falling", "lower", "limited", "weak", "fragment", "minimal", "no longer", "ended", "withdraw", "bankrupt", "chapter 11", "collapse"],
+  "forces": [
+    {
+      "id": "entrants",
+      "name": "Threat of new entrants",
+      "question": "How easily could a new competitor get in and take profit?",
+      "drivers": [
+        { "id": "capital", "name": "Capital requirements", "default": "lowers",
+          "note": "Big entry costs are a barrier, so evidence of them LOWERS the threat.",
+          "keywords": ["capital", "investment required", "invested", "billion", "funding", "cost to launch", "startup cost", "economies of scale", "scale", "per month", "per tournament"] },
+        { "id": "access", "name": "Access to talent & distribution", "default": "lowers",
+          "note": "Locked-up distribution, talent or channels LOWER the threat.",
+          "keywords": ["distribution", "broadcast", "media rights", "exclusive", "long-term contract", "membership", "shelf space", "channel", "patent", "license agreement", "audience"] },
+        { "id": "retaliation", "name": "Incumbent retaliation & regulation", "default": "lowers",
+          "note": "Expected retaliation or regulatory hurdles LOWER the threat.",
+          "keywords": ["retaliat", "suspend", "ban", "lawsuit", "litigation", "antitrust", "regulation", "regulatory", "permit", "compliance", "accountability", "rules"] },
+        { "id": "recent", "name": "Credible recent entrants", "default": "raises",
+          "note": "Recent, funded entrants that stuck RAISE the threat.",
+          "keywords": ["new entrant", "startup", "start-up", "upstart", "launched", "new league", "disrupt", "entered the market", "newcomer"] }
+      ]
+    },
+    {
+      "id": "suppliers",
+      "name": "Bargaining power of suppliers",
+      "question": "Can the providers of key inputs (talent, materials, IP) capture the profit?",
+      "drivers": [
+        { "id": "concentration", "name": "Supplier concentration & uniqueness", "default": "raises",
+          "keywords": ["supplier", "sole source", "single source", "key supplier", "concentrat", "star", "talent", "players", "union", "irreplaceable"] },
+        { "id": "costshare", "name": "Input's share of industry cost", "default": "raises",
+          "keywords": ["cost of goods", "input cost", "wage", "compensation", "purse", "prize", "labor cost", "raw material", "of expenses", "payroll"] },
+        { "id": "alternatives", "name": "Suppliers' outside options", "default": "raises",
+          "note": "If suppliers can easily sell elsewhere, their power RISES; if those options collapse, it falls.",
+          "keywords": ["outside option", "alternative buyer", "defect", "leave for", "switch to", "rival league", "other customers"] },
+        { "id": "integration", "name": "Forward integration & governance", "default": "raises",
+          "keywords": ["forward integrat", "own league", "equity", "ownership", "player-owned", "board", "director", "vertical", "co-founded"] }
+      ]
+    },
+    {
+      "id": "buyers",
+      "name": "Bargaining power of buyers",
+      "question": "Can customers (here: broadcasters, sponsors, fans) push prices down?",
+      "drivers": [
+        { "id": "concentration", "name": "Buyer concentration", "default": "raises",
+          "keywords": ["customer concentration", "top customers", "largest customer", "broadcaster", "network", "distributor", "retailer", "of revenue", "buyers"] },
+        { "id": "switching", "name": "Buyer switching costs & lock-in", "default": "lowers",
+          "note": "Long contracts and high switching costs LOWER buyer power until renewal.",
+          "keywords": ["switching cost", "long-term", "multi-year", "nine-year", "lock-in", "through 20", "renewal", "expire"] },
+        { "id": "pricesens", "name": "Buyer price sensitivity & churn", "default": "raises",
+          "keywords": ["price sensitive", "discount", "pricing pressure", "margin pressure", "commodit", "sponsor", "churn", "cancel", "not renew", "ending"] },
+        { "id": "alternatives", "name": "Buyers' alternatives", "default": "lowers",
+          "note": "When buyers have no comparable product to switch to, their power FALLS.",
+          "keywords": ["backward integrat", "private label", "in-house", "comparable", "viewers", "ratings", "audience", "most-watched"] }
+      ]
+    },
+    {
+      "id": "substitutes",
+      "name": "Threat of substitutes",
+      "question": "Can a different product meet the same need (here: fans' time, sponsors' dollars)?",
+      "drivers": [
+        { "id": "availability", "name": "Availability of substitutes", "default": "raises",
+          "keywords": ["substitut", "alternative", "streaming", "other sports", "entertainment", "competing for", "short-form", "youtube", "social media", "gaming", "creator"] },
+        { "id": "priceperf", "name": "Substitutes' price-performance", "default": "raises",
+          "keywords": ["cheaper", "free", "price-performance", "convenien", "on-demand", "clips", "shorter"] },
+        { "id": "switching", "name": "Customer switching costs & loyalty", "default": "lowers",
+          "note": "Habit, loyalty and deeper engagement LOWER the substitute threat.",
+          "keywords": ["switching cost", "habit", "loyal", "engagement", "wager", "betting", "tradition", "fan base"] }
+      ]
+    },
+    {
+      "id": "rivalry",
+      "name": "Rivalry among existing competitors",
+      "question": "How hard do current competitors fight over the same profit pool?",
+      "drivers": [
+        { "id": "number", "name": "Number & balance of competitors", "default": "raises",
+          "keywords": ["competitor", "rival", "market share", "top competitors", "consolidat", "merger", "fragment", "league"] },
+        { "id": "growth", "name": "Industry growth", "default": "lowers",
+          "note": "Fast growth LOWERS rivalry (everyone can win); slow or declining growth raises it.",
+          "keywords": ["growth", "grow", "cagr", "decline", "stagnant", "mature", "viewership", "revenue up", "increase"] },
+        { "id": "costs", "name": "Fixed costs, exit barriers & spending wars", "default": "raises",
+          "keywords": ["fixed cost", "capacity", "exit barrier", "loss", "deficit", "price war", "spending", "overspend"] },
+        { "id": "differentiation", "name": "Product differentiation", "default": "lowers",
+          "note": "Clear differentiation LOWERS rivalry; commodity products raise it.",
+          "keywords": ["differentiat", "brand", "commodity", "unique", "premium", "times the audience"] }
+      ]
+    }
+  ],
+  "briefFieldRoutes": {
+    "supply_chain": ["suppliers", "concentration"],
+    "customer_concentration": ["buyers", "concentration"],
+    "top_competitors": ["rivalry", "number"],
+    "regulatory_pressure": ["entrants", "retaliation"],
+    "industry_size_and_growth": ["rivalry", "growth"],
+    "biggest_threat": ["substitutes", "availability"]
+  }
+}
