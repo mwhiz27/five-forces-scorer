@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Forces Scorer</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#faf9f7; --panel:#fff; --panel-2:#f4f2ef;
+  --ink:#1b1c1e; --ink-2:#4a4d52; --muted:#6b6f76;
+  --line:#dcd7d0; --line-2:#ebe7e1;
+  --accent:#2f5d9e; --accent-soft:#eaf0f8;
+  --hi:#a3341f; --hi-soft:#f9e9e5;
+  --mid:#8a6100; --mid-soft:#fbf3df;
+  --lo:#1d6b3c; --lo-soft:#e9f4ec;
+  --radius:6px;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --bg:#16181b; --panel:#1e2125; --panel-2:#252930;
+    --ink:#e9e7e4; --ink-2:#c3c6cb; --muted:#9aa0a8;
+    --line:#3a3f46; --line-2:#2c3036;
+    --accent:#82aae0; --accent-soft:#1b2634;
+    --hi:#f0907c; --hi-soft:#33201c;
+    --mid:#e3b45f; --mid-soft:#2e2517;
+    --lo:#7fc99a; --lo-soft:#18271d;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+h1,h2,h3{font-family:var(--serif);font-weight:600}
+h1{font-size:26px;margin:0 0 4px}
+h2{font-size:20px;margin:28px 0 8px}
+h3{font-size:16px;margin:0 0 6px}
+p{margin:0 0 10px}
+a{color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.mono{font-family:var(--mono);font-size:12.5px}
+header{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.tabs button{font:inherit;font-size:14px;padding:7px 14px;border:1px solid var(--line);background:var(--panel);color:var(--ink-2);border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn{font:inherit;font-size:14px;padding:8px 14px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:var(--radius);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:12px 0}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px}
+.tile .lbl{font-size:12px;color:var(--muted);line-height:1.3;min-height:32px}
+.tile .val{font:600 26px/1.1 var(--serif);margin-top:4px}
+.tile.total{background:var(--panel-2)}
+.meter{display:flex;gap:3px;margin-top:6px}
+.meter i{flex:1;height:6px;border-radius:2px;background:var(--line-2)}
+.meter i.on{background:var(--ink-2)}
+.force{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);margin:14px 0;padding:16px 18px;break-inside:avoid-page}
+.force-head{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.score{font:600 34px/1 var(--serif);white-space:nowrap}
+.score small{font-size:15px;color:var(--muted);font-weight:400}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.badge{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2)}
+.badge.High{background:var(--lo-soft);color:var(--lo);border-color:transparent}
+.badge.Medium{background:var(--mid-soft);color:var(--mid);border-color:transparent}
+.badge.Low{background:var(--hi-soft);color:var(--hi);border-color:transparent}
+.badge.warn{background:var(--hi-soft);color:var(--hi);border-color:transparent}
+.rationale{font-size:15px;margin:8px 0 10px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line-2);vertical-align:top}
+th{font-weight:600;color:var(--ink-2);font-size:12.5px}
+.rate{font-weight:600}
+.rate.High{color:var(--hi)} .rate.Medium{color:var(--mid)} .rate.Low{color:var(--lo)} .rate.none{color:var(--muted);font-weight:400}
+.facts{list-style:none;margin:10px 0 0;padding:0;counter-reset:f}
+.facts li{padding:8px 0 8px 34px;border-top:1px solid var(--line-2);position:relative}
+.facts li::before{counter-increment:f;content:counter(f);position:absolute;left:4px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--panel-2);font-size:11.5px;text-align:center;line-height:20px;color:var(--ink-2)}
+.dir{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-right:6px}
+.dir.raises{color:var(--hi)} .dir.lowers{color:var(--lo)} .dir.mixed{color:var(--mid)}
+.cite{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.quote{display:block;font-size:13px;font-style:italic;color:var(--ink-2);margin-top:3px;padding-left:10px;border-left:2px solid var(--line)}
+details.method summary{cursor:pointer;color:var(--accent);font-size:13px;margin-top:8px}
+textarea{width:100%;min-height:220px;font:13px/1.45 var(--mono);padding:10px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink)}
+input[type=text],select{font:inherit;font-size:13px;padding:4px 6px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);max-width:100%}
+.review-wrap{overflow-x:auto}
+.review td{min-width:90px}
+.review td.txt{min-width:280px}
+.review input[type=text]{width:100%}
+.row-flag{color:var(--hi);font-size:12px}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:0 var(--radius) var(--radius) 0;margin:12px 0}
+.sources li{margin-bottom:4px;font-size:13px;word-break:break-word}
+.hidden{display:none!important}
+.print-only{display:none}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(3,1fr)}}
+@media print{
+  @page{size:letter portrait;margin:13mm}
+  :root{color-scheme:light;--bg:#fff;--panel:#fff;--panel-2:#f2f2f0;--ink:#000;--ink-2:#222;--muted:#555;--line:#bbb;--line-2:#ddd}
+  body{font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{max-width:none;padding:0}
+  .no-print,.tabs{display:none!important}
+  .print-only{display:block}
+  .force{padding:10px 12px;margin:8px 0}
+  .tiles{grid-template-columns:repeat(6,1fr)!important}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="muted small">Porter's Five Forces Scorer · evidence-first · every score is computed from cited facts</div>
+  <h1 id="title">Five Forces Scorer</h1>
+  <div id="subtitle" class="muted"></div>
+  <div class="print-only small" id="print-link"></div>
+  <nav class="tabs no-print" role="tablist">
+    <button role="tab" data-tab="analysis" aria-selected="true">PGA Tour analysis</button>
+    <button role="tab" data-tab="score" aria-selected="false">Score a new brief</button>
+    <button role="tab" data-tab="method" aria-selected="false">Method</button>
+  </nav>
+</header>
+
+<!-- ============ TAB 1: preloaded analysis ============ -->
+<main id="tab-analysis">
+  <div id="analysis-out"></div>
+</main>
+
+<!-- ============ TAB 2: paste a brief ============ -->
+<main id="tab-score" class="hidden">
+  <div class="panel no-print">
+    <h3>1 · Paste an industry brief</h3>
+    <p class="small muted">Accepts the JSON or Markdown output of the Industry Brief Generator, or any plain-text brief. Nothing leaves your browser.</p>
+    <textarea id="brief-in" placeholder="Paste brief JSON, Markdown, or plain text here…"></textarea>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center">
+      <label class="small">Company <input type="text" id="brief-company" placeholder="e.g. Acme Corp"></label>
+      <label class="small">Source document <input type="text" id="brief-doc" value="Industry brief" size="28"></label>
+      <button class="btn" id="btn-process">Process brief</button>
+      <button class="btn ghost" id="btn-example">Load example</button>
+      <button class="btn ghost" id="btn-clear">Clear</button>
+    </div>
+  </div>
+  <div id="review" class="hidden">
+    <div class="panel no-print">
+      <h3>2 · Review the routing</h3>
+      <p class="small muted">Each sentence or brief field became a candidate fact. The tool routed it to a force and driver by the keyword table (see Method) and guessed a direction. Check every row: reassign, flip direction, or set force to “— ignore —”. Facts need a document <em>and</em> a section/page to count. Add enrichment facts (10-K, analyst reports) with the button below.</p>
+      <div class="review-wrap"><table class="review" id="review-table"></table></div>
+      <div style="margin-top:8px"><button class="btn ghost" id="btn-add">+ Add a fact</button></div>
+      <div id="gaps-out"></div>
+    </div>
+    <h3 style="margin-top:20px">3 · Scores</h3>
+    <div id="score-out"></div>
+  </div>
+</main>
+
+<!-- ============ TAB 3: method ============ -->
+<main id="tab-method" class="hidden"><div id="method-out"></div></main>
+
+</div>
+<script id="rules-data" type="application/json">{"version": 1, "scale": {"ratingValues": {"Low": 1, "Medium": 2, "High": 3}, "formula": "score = 1 + 2 × (average driver rating − 1), where Low = 1, Medium = 2, High = 3. An average of 1.0 maps to 1, 2.0 to 3, 3.0 to 5.", "rounding": "Whole numbers only. A raw score that lands on a half (e.g. 2.5) rounds UP, toward the stronger force — a deliberately conservative bias for anyone deciding whether to enter or invest. Any raw score with a fractional part between .33 and .67 is flagged as a tension and named in the rationale.", "driverRule": "Each driver is rated from the net direction of its cited facts: more facts that raise the force than lower it → High; balanced or only mixed facts → Medium; more that lower it → Low. A driver with no cited facts is left unrated and drops out of the average.", "confidence": {"High": "4+ cited facts from 3+ distinct documents", "Medium": "3 cited facts, or 4+ from fewer than 3 documents", "Low": "fewer than 3 cited facts — the score is shown but should not be relied on"}}, "flipWords": ["declin", "decreas", "slow", "stagnan", "shrink", "fell", "falling", "lower", "limited", "weak", "fragment", "minimal", "no longer", "ended", "withdraw", "bankrupt", "chapter 11", "collapse"], "forces": [{"id": "entrants", "name": "Threat of new entrants", "question": "How easily could a new competitor get in and take profit?", "drivers": [{"id": "capital", "name": "Capital requirements", "default": "lowers", "note": "Big entry costs are a barrier, so evidence of them LOWERS the threat.", "keywords": ["capital", "investment required", "invested", "billion", "funding", "cost to launch", "startup cost", "economies of scale", "scale", "per month", "per tournament"]}, {"id": "access", "name": "Access to talent & distribution", "default": "lowers", "note": "Locked-up distribution, talent or channels LOWER the threat.", "keywords": ["distribution", "broadcast", "media rights", "exclusive", "long-term contract", "membership", "shelf space", "channel", "patent", "license agreement", "audience"]}, {"id": "retaliation", "name": "Incumbent retaliation & regulation", "default": "lowers", "note": "Expected retaliation or regulatory hurdles LOWER the threat.", "keywords": ["retaliat", "suspend", "ban", "lawsuit", "litigation", "antitrust", "regulation", "regulatory", "permit", "compliance", "accountability", "rules"]}, {"id": "recent", "name": "Credible recent entrants", "default": "raises", "note": "Recent, funded entrants that stuck RAISE the threat.", "keywords": ["new entrant", "startup", "start-up", "upstart", "launched", "new league", "disrupt", "entered the market", "newcomer"]}]}, {"id": "suppliers", "name": "Bargaining power of suppliers", "question": "Can the providers of key inputs (talent, materials, IP) capture the profit?", "drivers": [{"id": "concentration", "name": "Supplier concentration & uniqueness", "default": "raises", "keywords": ["supplier", "sole source", "single source", "key supplier", "concentrat", "star", "talent", "players", "union", "irreplaceable"]}, {"id": "costshare", "name": "Input's share of industry cost", "default": "raises", "keywords": ["cost of goods", "input cost", "wage", "compensation", "purse", "prize", "labor cost", "raw material", "of expenses", "payroll"]}, {"id": "alternatives", "name": "Suppliers' outside options", "default": "raises", "note": "If suppliers can easily sell elsewhere, their power RISES; if those options collapse, it falls.", "keywords": ["outside option", "alternative buyer", "defect", "leave for", "switch to", "rival league", "other customers"]}, {"id": "integration", "name": "Forward integration & governance", "default": "raises", "keywords": ["forward integrat", "own league", "equity", "ownership", "player-owned", "board", "director", "vertical", "co-founded"]}]}, {"id": "buyers", "name": "Bargaining power of buyers", "question": "Can customers (here: broadcasters, sponsors, fans) push prices down?", "drivers": [{"id": "concentration", "name": "Buyer concentration", "default": "raises", "keywords": ["customer concentration", "top customers", "largest customer", "broadcaster", "network", "distributor", "retailer", "of revenue", "buyers"]}, {"id": "switching", "name": "Buyer switching costs & lock-in", "default": "lowers", "note": "Long contracts and high switching costs LOWER buyer power until renewal.", "keywords": ["switching cost", "long-term", "multi-year", "nine-year", "lock-in", "through 20", "renewal", "expire"]}, {"id": "pricesens", "name": "Buyer price sensitivity & churn", "default": "raises", "keywords": ["price sensitive", "discount", "pricing pressure", "margin pressure", "commodit", "sponsor", "churn", "cancel", "not renew", "ending"]}, {"id": "alternatives", "name": "Buyers' alternatives", "default": "lowers", "note": "When buyers have no comparable product to switch to, their power FALLS.", "keywords": ["backward integrat", "private label", "in-house", "comparable", "viewers", "ratings", "audience", "most-watched"]}]}, {"id": "substitutes", "name": "Threat of substitutes", "question": "Can a different product meet the same need (here: fans' time, sponsors' dollars)?", "drivers": [{"id": "availability", "name": "Availability of substitutes", "default": "raises", "keywords": ["substitut", "alternative", "streaming", "other sports", "entertainment", "competing for", "short-form", "youtube", "social media", "gaming", "creator"]}, {"id": "priceperf", "name": "Substitutes' price-performance", "default": "raises", "keywords": ["cheaper", "free", "price-performance", "convenien", "on-demand", "clips", "shorter"]}, {"id": "switching", "name": "Customer switching costs & loyalty", "default": "lowers", "note": "Habit, loyalty and deeper engagement LOWER the substitute threat.", "keywords": ["switching cost", "habit", "loyal", "engagement", "wager", "betting", "tradition", "fan base"]}]}, {"id": "rivalry", "name": "Rivalry among existing competitors", "question": "How hard do current competitors fight over the same profit pool?", "drivers": [{"id": "number", "name": "Number & balance of competitors", "default": "raises", "keywords": ["competitor", "rival", "market share", "top competitors", "consolidat", "merger", "fragment", "league"]}, {"id": "growth", "name": "Industry growth", "default": "lowers", "note": "Fast growth LOWERS rivalry (everyone can win); slow or declining growth raises it.", "keywords": ["growth", "grow", "cagr", "decline", "stagnant", "mature", "viewership", "revenue up", "increase"]}, {"id": "costs", "name": "Fixed costs, exit barriers & spending wars", "default": "raises", "keywords": ["fixed cost", "capacity", "exit barrier", "loss", "deficit", "price war", "spending", "overspend"]}, {"id": "differentiation", "name": "Product differentiation", "default": "lowers", "note": "Clear differentiation LOWERS rivalry; commodity products raise it.", "keywords": ["differentiat", "brand", "commodity", "unique", "premium", "times the audience"]}]}], "briefFieldRoutes": {"supply_chain": ["suppliers", "concentration"], "customer_concentration": ["buyers", "concentration"], "top_competitors": ["rivalry", "number"], "regulatory_pressure": ["entrants", "retaliation"], "industry_size_and_growth": ["rivalry", "growth"], "biggest_threat": ["substitutes", "availability"]}}</script>
+<script id="evidence-data" type="application/json">{"company": {"name": "PGA Tour Entertainment Inc.", "industry": "Professional men's golf tours (spectator sports promotion)", "analysisDate": "2026-10-02", "brief": "Industry brief generated 2026-09-19 with the Industry Brief Generator (Strategic Project)."}, "scope": "The 'industry' is the business of staging elite professional men's golf tours and selling the resulting media rights, sponsorships and tickets. Suppliers are the players (the scarce input); buyers are broadcasters/streamers and sponsors (~63% of 2023 revenue combined); substitutes are other uses of fans' attention and sponsors' budgets; rivals are other tours (LIV Golf, DP World Tour). The four majors are run by independent bodies and are treated as part of the competitive landscape, not the Tour's own product.", "sources": {"S1": {"doc": "ProPublica Nonprofit Explorer — PGA Tour Inc (EIN 52-0999206), Form 990 filings summary", "url": "https://projects.propublica.org/nonprofits/organizations/520999206", "date": "accessed 2026-10-02", "type": "filing"}, "S2": {"doc": "Paddock Post, \"How Revenue is Spent at PGA Tour, Inc (2023)\" (analysis of the FY2023 Form 990)", "url": "https://paddockpost.com/2025/07/02/how-revenue-is-spent-at-pga-tour-inc-2023/", "date": "2025-07-02", "type": "analysis"}, "S3": {"doc": "PGA TOUR press release, \"PGA TOUR launches PGA TOUR Enterprises, new program that transforms players into equity holders\"", "url": "https://www.pgatour.com/article/news/latest/2024/01/31/pga-tour-launches-pga-tour-enterprises-new-program-that-transforms-players-into-equity-holders", "date": "2024-01-31", "type": "company"}, "S4": {"doc": "PGA TOUR, \"PGA TOUR CEO Brian Rolapp: 'Substantial progress' made toward new competitive model, but work remains\"", "url": "https://www.pgatour.com/article/news/latest/2026/06/03/pga-tour-ceo-brian-rolapp-speaks-memorial-tournament-new-competitive-model-track-1-2-future-competitions-committee", "date": "2026-06-03", "type": "company"}, "S5": {"doc": "GOLF.com (J. Berhow), \"PIF statement: LIV Golf 'no longer consistent' with investment strategy\"", "url": "https://golf.com/news/pif-statement-liv-golf-investment-strategy/", "date": "2026-04-30", "type": "press"}, "S6": {"doc": "CBS Sports (R. Kalland), \"LIV Golf restructures as Saudi Arabia ends funding after 2026 season\"", "url": "https://www.cbssports.com/golf/news/saudi-arabia-liv-golf-funding-2026-season-pga-tour/", "date": "2026-04-30", "type": "press"}, "S7": {"doc": "ESPN (M. Schlabach & P. Uggetti), \"Answering some of the biggest questions around LIV Golf and what comes next\"", "url": "https://www.espn.com/golf/story/_/id/48637510/answering-biggest-question-liv-golf-pga-tour-comes-next", "date": "2026-04-30", "type": "press"}, "S8": {"doc": "Ministry of Sport, \"LIV Golf Files for Chapter 11 Bankruptcy and Restructures Into Player-Owned 'LIV 2.0' Model\"", "url": "https://ministryofsport.com/liv-golf-files-for-chapter-11-bankruptcy-and-restructures-into-player-owned-liv-2-0-model/", "date": "2026-09-09", "type": "press"}, "S9": {"doc": "Sports Video Group (K. Kerschbaumer), \"PGA TOUR Inks Deal Through 2030 With CBS, NBC, ESPN+\"", "url": "https://www.sportsvideo.org/2020/03/09/pga-tour-inks-deal-through-2030-with-cbs-nbc-espn-production-technical-efforts-brought-in-house/", "date": "2020-03-09", "type": "press"}, "S10": {"doc": "GOLF.com (J. Colgan), \"PGA Tour and LIV Golf TV ratings reveal striking audience data\"", "url": "https://golf.com/news/pga-tour-liv-tv-ratings-data/", "date": "2025-05-28", "type": "press"}, "S11": {"doc": "Heavy via Yahoo Sports (C. Lewis), \"PGA Tour Viewership Increases Continue After 2026 Season\"", "url": "https://sports.yahoo.com/articles/pga-tour-viewership-increases-continue-004407525.html", "date": "2026-09-05", "type": "press"}, "S12": {"doc": "Times of San Diego (M. Nero), \"Farmers Insurance is leaving, but Torrey Pines tournament will continue\"", "url": "https://timesofsandiego.com/sports/2026/01/12/farmers-insurance-leaving-torrey-pines-tournament-continue/", "date": "2026-01-12", "type": "press"}, "S13": {"doc": "Wikipedia, \"Men's major golf championships\"", "url": "https://en.wikipedia.org/wiki/Men%27s_major_golf_championships", "date": "accessed 2026-10-02", "type": "reference"}, "S14": {"doc": "WSC Sports, \"The 2025-2026 Generational Fan Study\"", "url": "https://wsc-sports.com/blog/industry-insights/the-2025-2026-generational-fan-study/", "date": "2025-12-03", "type": "analysis"}, "S15": {"doc": "Golfweek / USA TODAY Sports via Yahoo (T. D'Angelo), \"TGL sets season 3 start date against NFL schedule\"", "url": "https://sports.yahoo.com/articles/tgl-sets-season-3-start-131802390.html", "date": "2026-10-01", "type": "press"}, "S16": {"doc": "PGA TOUR, \"Signature Events\" overview page", "url": "https://www.pgatour.com/signature-events", "date": "accessed 2026-10-02", "type": "company"}}, "facts": [{"id": "E1", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S5", "section": "PIF statement, paragraphs 1–2", "fact": "The best-funded entrant in the sport's history, LIV Golf, absorbed over $5 billion from Saudi Arabia's PIF and its backer still walked away after five seasons.", "quote": "The substantial investment required by LIV Golf over a longer term is no longer consistent with the current phase of PIF's investment strategy."}, {"id": "E2", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S7", "section": "\"How much has LIV spent?\" section", "fact": "LIV was reportedly burning about $100 million a month to compete — the price of entry at the top of the sport.", "quote": "reportedly spending $100 million a month and $40 million per tournament"}, {"id": "E3", "force": "entrants", "driver": "capital", "direction": "lowers", "source": "S8", "section": "Filing details, paragraphs 1–2", "fact": "LIV Golf filed for Chapter 11 in the U.S. Bankruptcy Court for New Jersey in September 2026, unable to pay marquee players; Rahm, DeChambeau and Johnson each hold unsecured claims above $5 million."}, {"id": "E4", "force": "entrants", "driver": "access", "direction": "lowers", "source": "S9", "section": "Deal summary, paragraphs 1–3", "fact": "The Tour's U.S. broadcast windows are locked in nine-year agreements through 2030 with CBS (~19 events/yr), NBC (~8) and ESPN+ (exclusive PGA TOUR LIVE), leaving little premium distribution for an entrant."}, {"id": "E5", "force": "entrants", "driver": "access", "direction": "lowers", "source": "S10", "section": "Head-to-head Sundays, paragraphs 2–4", "fact": "Even with $5B behind it, LIV averaged 175,000 viewers against the PGA Tour's 3.1 million across seven head-to-head Sundays — a 17.78× audience gap.", "quote": "PGA Tour: 3.1 million average viewers (CBS/NBC) ... LIV Golf: 175,000 average viewers (FOX/FS1/FS2)"}, {"id": "E6", "force": "entrants", "driver": "retaliation", "direction": "lowers", "source": "S6", "section": "\"What happens to star players?\" section", "fact": "The incumbent signals it will punish defection: PGA Tour CEO Brian Rolapp says reinstatement of LIV players will not be automatic.", "quote": "There were rules, and they were broken. With rules comes accountability."}, {"id": "E7", "force": "entrants", "driver": "recent", "direction": "raises", "source": "S15", "section": "Season 2 viewership & ESPN deal, paragraphs 2–4", "fact": "A new format did get in: TGL (TMRW Sports, co-founded by Woods and McIlroy) drew 21.8 million total viewers in season 2 (+8%), renewed with ESPN and is expanding to seven teams."}, {"id": "E8", "force": "entrants", "driver": "recent", "direction": "raises", "source": "S8", "section": "New structure, paragraph 3", "fact": "LIV is trying to re-enter as \"LIV 2.0\" — backed by BC Partners' credit arm, majority player-owned, with 75-player fields across five continents.", "quote": "We are entering this process with a clear plan and the support of BC Partners"}, {"id": "P1", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S2", "section": "Expenses table (FY2023 Form 990, functional expenses)", "fact": "Payments to players (\"fees for services\" — prizes and benefits) were $833 million, 46% of the Tour's 2023 expenses: the single largest cost by far."}, {"id": "P2", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S2", "section": "Key finding", "fact": "The Tour spent $104 for every $100 of revenue in 2023, a $62 million deficit — the talent captured more than the whole surplus."}, {"id": "P3", "force": "suppliers", "driver": "costshare", "direction": "raises", "source": "S16", "section": "Signature Events overview, paragraph 1", "fact": "Eight 2026 Signature Events pay $20 million purses with limited fields, five of them with no cut — guaranteed money for the top players.", "quote": "limited-field events featuring top players with increased prize money ($20 million)"}, {"id": "P4", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S3", "section": "Player equity program, paragraph 3", "fact": "Nearly 200 players became equity holders in PGA TOUR Enterprises, collectively granted over $1.5 billion in equity — suppliers now own part of the buyer.", "quote": "over $1.5 billion in equity in PGA TOUR Enterprises"}, {"id": "P5", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S1", "section": "FY2024 filing — compensation of officers/directors", "fact": "Players sit on the board and top the compensation list: player directors Tiger Woods ($18.3M) and Jordan Spieth ($10.1M) out-earned the commissioner ($8.6M) on the FY2024 990."}, {"id": "P6", "force": "suppliers", "driver": "concentration", "direction": "raises", "source": "S4", "section": "Postseason format & Committee work", "fact": "The Tour's own CEO concedes product design runs through the players: the Future Competition Committee held 14 full meetings with player representatives.", "quote": "if it doesn't feel authentic to the players...it's not going to feel authentic to anybody"}, {"id": "P7", "force": "suppliers", "driver": "alternatives", "direction": "lowers", "source": "S8", "section": "Player status, final paragraph", "fact": "Players' best outside option has collapsed: LIV's multi-year contracts will be terminated through the bankruptcy, and stars are unsecured creditors."}, {"id": "P8", "force": "suppliers", "driver": "alternatives", "direction": "lowers", "source": "S5", "section": "PIF statement, paragraph 1", "fact": "The sole funder of the rival bidder for talent will fund LIV \"only for the remainder of the 2026 season,\" removing the nine-figure contracts that gave players leverage.", "quote": "PIF has made the decision to fund LIV Golf only for the remainder of the 2026 season."}, {"id": "P9", "force": "suppliers", "driver": "integration", "direction": "raises", "source": "S15", "section": "Ownership, paragraph 3", "fact": "The two biggest draws, Woods and McIlroy, co-founded their own league (TGL), showing the top suppliers can integrate forward."}, {"id": "B1", "force": "buyers", "driver": "concentration", "direction": "raises", "source": "S9", "section": "Deal summary, paragraph 1", "fact": "All U.S. TV and streaming rights are held by just three buyers — CBS, NBC and Disney/ESPN+."}, {"id": "B2", "force": "buyers", "driver": "concentration", "direction": "raises", "source": "S2", "section": "Revenue table (FY2023 Form 990)", "fact": "Media rights were $731M of ~$1.8B 2023 revenue (about 40%), and sponsorship another $422M — two buyer groups fund roughly two-thirds of the Tour."}, {"id": "B3", "force": "buyers", "driver": "switching", "direction": "lowers", "source": "S9", "section": "Financial impact paragraph", "fact": "Rights fees rose about 60% in the 2022–2030 deal and are locked for nine years, so broadcasters cannot renegotiate before 2030."}, {"id": "B4", "force": "buyers", "driver": "switching", "direction": "mixed", "source": "S4", "section": "Media rights & strategic alliances", "fact": "The lock-in is ending: current media contracts expire in 2030 and the Tour plans to negotiate successor deals early, which reopens buyer leverage."}, {"id": "B5", "force": "buyers", "driver": "pricesens", "direction": "raises", "source": "S12", "section": "Key details, paragraphs 1–2", "fact": "Farmers Insurance is ending its 16-year title sponsorship of the Torrey Pines event after 2026, with no replacement sponsor named."}, {"id": "B6", "force": "buyers", "driver": "pricesens", "direction": "lowers", "source": "S4", "section": "Financial context", "fact": "Sponsor demand is still deep: $1.2B of contractual revenue across 36 partners in 2025, and $347M from 13 new partner deals in 2026."}, {"id": "B7", "force": "buyers", "driver": "alternatives", "direction": "lowers", "source": "S10", "section": "Network performance gap", "fact": "Networks have no comparable golf property to switch to: the PGA Tour's broadcast audience is 6.5× LIV's on network TV and 5× on cable (506K vs 101K)."}, {"id": "B8", "force": "buyers", "driver": "alternatives", "direction": "lowers", "source": "S11", "section": "Signature events & regular season figures", "fact": "The product is gaining audience: the 2026 Players Championship drew 4.4M (+15%) and the Tour Championship final round 5.37M, the most since 2018."}, {"id": "U1", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S14", "section": "Key statistics — streaming dominance", "fact": "Streaming is now the main sports destination for 65% of Millennials and 55% of Gen Z, where golf competes with every other sport and creator on one screen.", "quote": "65 percent of Millennials and 55 percent of Gen Z selecting it as their main sports destination"}, {"id": "U2", "force": "substitutes", "driver": "priceperf", "direction": "raises", "source": "S14", "section": "Short-form video discovery", "fact": "62% of fans discovered a new team, player or league through short-form video — free, two-minute clips substitute for a four-hour broadcast.", "quote": "62% of fans discovered a new team, player, or league through short-form video"}, {"id": "U3", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S13", "section": "Significance", "fact": "Golf's biggest events are not the Tour's product — independent bodies (Augusta National, PGA of America, USGA, The R&A) run all four majors.", "quote": "Independent organizations, and not the PGA Tour, operate each of the majors."}, {"id": "U4", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S11", "section": "Major championships", "fact": "The 2026 Masters final round drew ~14 million viewers versus a 2.7 million Tour regular-season average — fans' and sponsors' golf attention concentrates on events the Tour does not own."}, {"id": "U5", "force": "substitutes", "driver": "availability", "direction": "raises", "source": "S15", "section": "Season 2 viewership; season 3 date", "fact": "TGL, an arena-style golf format on ESPN, drew 21.8M total viewers in season 2 and deliberately schedules against the NFL — a made-for-TV substitute for traditional tour golf."}, {"id": "U6", "force": "substitutes", "driver": "switching", "direction": "lowers", "source": "S11", "section": "Additional metrics", "fact": "Engagement is deepening: total money wagered on Tour events rose 30% in 2026, a habit that ties viewers to the live product."}, {"id": "R1", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S8", "section": "Filing details", "fact": "The only well-funded rival tour, LIV Golf, is in Chapter 11 with more than $500 million in debt."}, {"id": "R2", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S6", "section": "Financial struggles", "fact": "LIV was losing an estimated $500–600 million a year and postponed its New Orleans event even before filing."}, {"id": "R3", "force": "rivalry", "driver": "number", "direction": "lowers", "source": "S4", "section": "Media rights & strategic alliances", "fact": "The other major tour is a partner, not a rival: the PGA Tour and DP World Tour are working to \"renew and improve\" their Strategic Alliance."}, {"id": "R4", "force": "rivalry", "driver": "number", "direction": "raises", "source": "S8", "section": "New structure", "fact": "Rivalry is not over: LIV 2.0 plans global expansion across five continents with 75-player fields, cuts and Monday qualifiers."}, {"id": "R5", "force": "rivalry", "driver": "costs", "direction": "raises", "source": "S2", "section": "Key finding / expenses table", "fact": "The bidding war for players left the Tour itself spending $104 per $100 of revenue in 2023, with player payments 46% of costs."}, {"id": "R6", "force": "rivalry", "driver": "costs", "direction": "raises", "source": "S7", "section": "\"How much has LIV spent?\" section", "fact": "LIV's spend of ~$40 million per tournament set a cost floor the Tour had to answer with $20M signature purses."}, {"id": "R7", "force": "rivalry", "driver": "growth", "direction": "mixed", "source": "S11", "section": "Regular season", "fact": "The core audience is mature: regular-season viewership grew only 1% in 2026 (2.7M vs 2.6M on Nielsen Big Data)."}, {"id": "R8", "force": "rivalry", "driver": "differentiation", "direction": "lowers", "source": "S10", "section": "Head-to-head Sundays", "fact": "The PGA Tour's product is clearly differentiated in fans' eyes — 17.78× LIV's audience when both played the same Sunday."}], "analysis": {"entrants": {"score": 2, "rationale": "Entry is technically possible — TGL got in and LIV is trying again — but the one full-scale entrant spent over $5 billion, won a fraction of the audience and is now in bankruptcy. Capital, locked-up distribution through 2030 and an incumbent that punishes defectors make the barriers high, so the threat is weak; it is a 2 rather than a 1 only because niche formats like TGL show the edges are still open."}, "suppliers": {"score": 4, "rationale": "Elite players are the product and they capture the economics: payouts are 46% of the Tour's costs, the Tour ran a deficit in 2023, and players now hold board seats and $1.5 billion of equity. LIV's collapse just took away their best outside option, which is why this is a 4 and not a 5 — but forward integration (TGL, a player-owned LIV 2.0) keeps their leverage real."}, "buyers": {"score": 3, "rationale": "Three broadcasters buy all U.S. media rights and media plus sponsorship fund about two-thirds of revenue, so buyers are concentrated. But they are locked in through 2030, have no comparable golf property to switch to, and sponsors replacing departing ones (13 new deals worth $347M in 2026) offsets exits like Farmers. The raw score sits exactly between 2 and 3; it rounds up because the 2030 renewal is the moment buyer leverage returns."}, "substitutes": {"score": 4, "rationale": "The Tour competes for attention with every streaming sport, two-minute clip and creator — and even within golf, the biggest audiences go to majors it does not own and to new formats like TGL. Rising betting engagement is the one thing tying fans to the live product; it pulls the raw score to 3.7, between a 3 and a 4, and it rounds to 4 because four separate substitutes are already taking audience."}, "rivalry": {"score": 3, "rationale": "On structure alone rivalry is low: the only funded rival is in Chapter 11, the DP World Tour is an ally, and the PGA Tour draws 17× LIV's audience. What keeps it at a 3 is the cost legacy of the war — $20M purses and a spending base the Tour cannot easily unwind — plus a LIV 2.0 that may yet re-emerge. The raw score falls between 2 and 3; it rounds up toward the stronger force."}, "overall": "Total 16 of 25: a moderately unattractive industry for anyone hoping to earn a profit staging tour golf, and the reason is not rivals — it is the talent and the fight for attention. Supplier power (4) is the dominant force: the players are the product, they take nearly half of the Tour's costs, and they now own equity and sit on the board. Substitutes (4) are the second: fans' time is contested by streaming, short-form video, majors the Tour does not own and new formats like TGL. LIV's collapse lowered rivalry and proved entry barriers are high, which helps, but it does not change who captures the money. The industry is attractive for the players and for owners of scarce events (the majors) more than for the tour operator itself.", "leastConfident": {"force": "rivalry", "why": "Rivalry is changing month to month: LIV filed for Chapter 11 on September 8, 2026, and whether a player-owned LIV 2.0 emerges with a real calendar decides whether this is a 2 or a 4. Two of its four drivers rest on 2023–2025 numbers that predate the bankruptcy.", "settle": "Three pieces of evidence would settle it: (1) the confirmed LIV 2.0 reorganization plan and its 2027 schedule from the New Jersey bankruptcy docket; (2) how many top-50 world-ranked players sign with LIV 2.0 versus seek PGA Tour reinstatement; and (3) the PGA Tour's FY2025 Form 990 / PGA TOUR Enterprises financials showing whether purses and player spending fall once the bidding war ends."}, "limits": ["Scores come from counted evidence, not weighted evidence: one Form 990 line and one press anecdote each move a driver by one step. The analyst picks which facts to include, so selection bias is the main risk.", "Since 2024 most commercial activity moved into PGA TOUR Enterprises (a for-profit entity that does not file a 990) — the FY2024 990 shows revenue of only $760.6M versus $1.83B in 2023. Cost-share facts therefore use FY2023, the last complete year.", "Several facts come from press coverage of fast-moving events (LIV bankruptcy) rather than court filings; they should be refreshed against the docket before any decision.", "Keyword routing for pasted briefs is a first pass. It does not understand negation beyond a short flip-word list, so every routed fact must be reviewed before its score is trusted."]}}</script>
+<script>
+"use strict";
+const RULES = JSON.parse(document.getElementById("rules-data").textContent);
+const EV = JSON.parse(document.getElementById("evidence-data").textContent);
+const RV = RULES.scale.ratingValues;
+const FORCES = RULES.forces;
+const forceById = Object.fromEntries(FORCES.map(f => [f.id, f]));
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const has = v => v != null && String(v).trim() !== "";
+const DIR_SIGN = {raises: 1, lowers: -1, mixed: 0};
+
+/* ---------------- scoring engine ----------------
+   facts: [{force, driver, direction, doc, section, fact, quote, url}]
+   A fact counts only if it has a force, a driver, a document and a section. */
+function isCited(f){ return has(f.force) && has(f.driver) && has(f.doc) && has(f.section); }
+
+function scoreForce(forceId, facts){
+  const force = forceById[forceId];
+  const mine = facts.filter(f => f.force === forceId && isCited(f));
+  const drivers = force.drivers.map(d => {
+    const df = mine.filter(f => f.driver === d.id);
+    const net = df.reduce((s, f) => s + (DIR_SIGN[f.direction] ?? 0), 0);
+    const rating = df.length === 0 ? null : net > 0 ? "High" : net < 0 ? "Low" : "Medium";
+    return {...d, facts: df, net, rating};
+  });
+  const rated = drivers.filter(d => d.rating);
+  let avg = null, raw = null, score = null, tension = null;
+  if (rated.length){
+    avg = rated.reduce((s, d) => s + RV[d.rating], 0) / rated.length;
+    raw = 1 + 2 * (avg - 1);
+    score = Math.min(5, Math.max(1, Math.floor(raw + 0.5)));   // half rounds up
+    const frac = raw - Math.floor(raw);
+    if (frac >= 0.33 && frac <= 0.67) tension = [Math.floor(raw), Math.floor(raw) + 1];
+  }
+  const docs = new Set(mine.map(f => f.doc.trim().toLowerCase()));
+  const confidence = mine.length < 3 ? "Low" : (mine.length >= 4 && docs.size >= 3) ? "High" : "Medium";
+  return {force, drivers, facts: mine, avg, raw, score, tension, confidence, docCount: docs.size};
+}
+
+function scoreAll(facts){ return FORCES.map(f => scoreForce(f.id, facts)); }
+
+/* ---------------- auto-drafted text (for pasted briefs) ---------------- */
+function draftRationale(r){
+  if (r.score == null) return "No cited facts were routed to this force, so it cannot be scored. Add evidence before using this number.";
+  const hi = r.drivers.filter(d => d.rating === "High").map(d => d.name.toLowerCase());
+  const lo = r.drivers.filter(d => d.rating === "Low").map(d => d.name.toLowerCase());
+  const un = r.drivers.filter(d => !d.rating).map(d => d.name.toLowerCase());
+  let s = `Scored ${r.score} of 5 from ${r.facts.length} cited fact${r.facts.length === 1 ? "" : "s"}.`;
+  if (hi.length) s += ` The force is pushed up by ${list(hi)}`;
+  if (hi.length && lo.length) s += `, and held down by ${list(lo)}.`;
+  else if (lo.length) s += ` The force is held down by ${list(lo)}.`;
+  else if (hi.length) s += ".";
+  if (r.tension) s += ` The raw score (${r.raw.toFixed(1)}) sits between ${r.tension[0]} and ${r.tension[1]}; it rounds ${r.score === r.tension[1] ? "up toward the stronger force" : "down"}, and that tension should be argued, not hidden.`;
+  else if (un.length) s += ` No evidence yet on ${list(un)}.`;
+  return s;
+}
+function list(a){ return a.length <= 1 ? (a[0] || "") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
+
+function draftOverall(results){
+  const scored = results.filter(r => r.score != null);
+  const total = scored.reduce((s, r) => s + r.score, 0);
+  const max = scored.length * 5;
+  const top = [...scored].sort((a, b) => b.score - a.score || b.facts.length - a.facts.length);
+  const dom = top.filter(r => r.score >= 4).slice(0, 2);
+  const weak = scored.filter(r => r.score <= 2).map(r => r.force.name.toLowerCase());
+  const pct = max ? total / max : 0;
+  const verdict = pct >= 0.7 ? "unattractive" : pct >= 0.55 ? "moderately unattractive" : pct >= 0.4 ? "moderately attractive" : "attractive";
+  let s = `Total ${total} of ${max}: on these scores the industry looks ${verdict} for an average competitor.`;
+  if (dom.length) s += ` The dominant ${dom.length > 1 ? "forces are" : "force is"} ${list(dom.map(r => r.force.name.toLowerCase() + " (" + r.score + ")"))}, which is where profit leaks out — read the industry through ${dom.length > 1 ? "them" : "it"} rather than through the average.`;
+  else s += " No single force scores 4 or higher, so pressure is spread across forces rather than concentrated.";
+  if (weak.length) s += ` ${cap(list(weak))} ${weak.length > 1 ? "are" : "is"} weak, which partly offsets this.`;
+  const low = scored.filter(r => r.confidence === "Low");
+  if (low.length) s += ` Treat ${list(low.map(r => r.force.name.toLowerCase()))} with caution: fewer than three cited facts.`;
+  return s;
+}
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+function pickLeastConfident(results){
+  const rank = {Low: 0, Medium: 1, High: 2};
+  return [...results].sort((a, b) =>
+    (rank[a.confidence] - rank[b.confidence]) ||
+    ((b.tension ? 1 : 0) - (a.tension ? 1 : 0)) ||
+    (a.facts.length - b.facts.length))[0];
+}
+function draftSettle(r){
+  const thin = r.drivers.filter(d => !d.rating || d.facts.length < 2).map(d => d.name.toLowerCase());
+  let s = `${r.force.name} has ${r.facts.length} cited fact${r.facts.length === 1 ? "" : "s"} from ${r.docCount} document${r.docCount === 1 ? "" : "s"} (confidence: ${r.confidence})`;
+  s += r.tension ? `, and its raw score sits between ${r.tension[0]} and ${r.tension[1]}.` : ".";
+  if (thin.length) s += ` Evidence on ${list(thin)} would settle it — look in the company's 10-K (Item 1 Business, Item 1A Risk Factors, Item 7 MD&A) or an analyst report.`;
+  return s;
+}
+
+/* ---------------- rendering ---------------- */
+function meter(n){ return `<div class="meter">${[1,2,3,4,5].map(i => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</div>`; }
+
+function renderTiles(results){
+  const total = results.reduce((s, r) => s + (r.score || 0), 0);
+  return `<div class="tiles">${results.map(r => `<div class="tile"><div class="lbl">${esc(r.force.name)}</div><div class="val">${r.score ?? "–"}</div>${meter(r.score || 0)}</div>`).join("")}
+    <div class="tile total"><div class="lbl">Total (5 = strong force; high total = unattractive)</div><div class="val">${total}<span class="muted" style="font-size:15px"> / 25</span></div>${meter(Math.round(total / 5))}</div></div>`;
+}
+
+function renderForce(r, rationale, stated){
+  const mismatch = stated != null && stated !== r.score;
+  const facts = r.facts.map(f => `<li><span class="dir ${f.direction}">${f.direction === "raises" ? "▲ raises" : f.direction === "lowers" ? "▼ lowers" : "◆ mixed"}</span>${esc(f.fact)}
+      ${has(f.quote) ? `<span class="quote">“${esc(f.quote)}”</span>` : ""}
+      <span class="cite">${f.sid ? `[${esc(f.sid)}] ` : ""}${f.url ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.doc)}</a>` : esc(f.doc)} · ${esc(f.section)}${f.date ? " · " + esc(f.date) : ""} · <em>${esc(driverName(r.force.id, f.driver))}</em></span></li>`).join("");
+  const drv = r.drivers.map(d => `<tr><td>${esc(d.name)}${d.note ? `<div class="small muted">${esc(d.note)}</div>` : ""}</td><td class="rate ${d.rating || "none"}">${d.rating || "unrated"}</td><td>${d.facts.length}</td><td class="mono">${d.rating ? (d.net > 0 ? "+" : "") + d.net : "—"}</td></tr>`).join("");
+  return `<section class="force">
+    <div class="force-head">
+      <div><h3>${esc(r.force.name)}</h3><div class="small muted">${esc(r.force.question)}</div>
+        <div class="badges"><span class="badge ${r.confidence}">Confidence: ${r.confidence}</span><span class="badge">${r.facts.length} cited facts · ${r.docCount} docs</span>${r.tension ? `<span class="badge Medium">Tension: ${r.tension[0]} vs ${r.tension[1]}</span>` : ""}${mismatch ? `<span class="badge warn">Stated ${stated} ≠ computed ${r.score}</span>` : ""}</div></div>
+      <div class="score">${r.score ?? "–"}<small> / 5</small>${meter(r.score || 0)}</div>
+    </div>
+    <p class="rationale">${esc(rationale)}</p>
+    <ol class="facts">${facts || '<li class="muted">No cited facts.</li>'}</ol>
+    <details class="method"><summary>How this score was computed</summary>
+      <table><tr><th>Driver</th><th>Rating</th><th>Facts</th><th>Net</th></tr>${drv}</table>
+      <p class="small muted" style="margin-top:6px">Average driver rating ${r.avg != null ? r.avg.toFixed(2) : "—"} → raw ${r.raw != null ? r.raw.toFixed(2) : "—"} → whole-number score ${r.score ?? "—"}. ${esc(RULES.scale.formula)}</p>
+    </details>
+  </section>`;
+}
+function driverName(fid, did){ const d = forceById[fid]?.drivers.find(x => x.id === did); return d ? d.name : did; }
+
+/* ---------------- tab 1: preloaded analysis ---------------- */
+function evFacts(){
+  return EV.facts.map(f => { const s = EV.sources[f.source] || {}; return {...f, sid: f.source, doc: s.doc, url: s.url, date: s.date}; });
+}
+function renderAnalysis(){
+  const facts = evFacts();
+  const results = scoreAll(facts);
+  const A = EV.analysis;
+  document.getElementById("title").textContent = `Five Forces: ${EV.company.name}`;
+  document.getElementById("subtitle").textContent = `${EV.company.industry} · analysis dated ${EV.company.analysisDate}`;
+  const lc = results.find(r => r.force.id === A.leastConfident.force);
+  const usedSources = [...new Set(EV.facts.map(f => f.source))];
+  document.getElementById("analysis-out").innerHTML = `
+    ${renderTiles(results)}
+    <div class="callout"><strong>Scope.</strong> ${esc(EV.scope)}</div>
+    ${results.map(r => renderForce(r, A[r.force.id].rationale, A[r.force.id].score)).join("")}
+    <h2>Overall read on industry attractiveness</h2>
+    <div class="panel"><p>${esc(A.overall)}</p></div>
+    <h2>Least confident: ${esc(lc.force.name)} (${lc.score}/5)</h2>
+    <div class="panel"><p>${esc(A.leastConfident.why)}</p><p><strong>What would settle it.</strong> ${esc(A.leastConfident.settle)}</p></div>
+    <h2>Limits of this method</h2>
+    <div class="panel"><ul>${A.limits.map(l => `<li>${esc(l)}</li>`).join("")}</ul></div>
+    <h2>Sources</h2>
+    <ol class="sources">${usedSources.map(id => { const s = EV.sources[id]; return `<li>[${id}] <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.doc)}</a> · ${esc(s.date)}</li>`; }).join("")}</ol>`;
+}
+
+/* ---------------- tab 2: paste & process ---------------- */
+let WORK = [];   // facts under review
+
+const FIELD_TITLES = {
+  industry_size_and_growth: "Industry size & growth", top_competitors: "Top competitors",
+  regulatory_pressure: "Regulatory & compliance pressure", supply_chain: "Supply chain concentration",
+  customer_concentration: "Customer concentration", biggest_trend: "Biggest trend", biggest_threat: "Biggest threat"
+};
+const HEADING_TO_FIELD = [
+  [/size|growth/i, "industry_size_and_growth"], [/competitor/i, "top_competitors"],
+  [/regulat|compliance/i, "regulatory_pressure"], [/supply|supplier/i, "supply_chain"],
+  [/customer|buyer/i, "customer_concentration"], [/trend/i, "biggest_trend"], [/threat/i, "biggest_threat"]
+];
+
+function routeByKeywords(text){
+  const t = " " + text.toLowerCase() + " ";
+  let best = null;
+  for (const f of FORCES) for (const d of f.drivers){
+    const hits = d.keywords.filter(k => t.includes(k.toLowerCase()));
+    if (hits.length && (!best || hits.length > best.hits.length)) best = {force: f.id, driver: d.id, hits};
+  }
+  return best;
+}
+function guessDirection(forceId, driverId, text){
+  const d = forceById[forceId].drivers.find(x => x.id === driverId);
+  const t = " " + text.toLowerCase() + " ";
+  const flip = RULES.flipWords.find(w => t.includes(w));
+  let dir = d.default;
+  if (flip) dir = dir === "raises" ? "lowers" : "raises";
+  return {dir, flip};
+}
+function makeFact(text, quote, section, doc, field){
+  const route = field && RULES.briefFieldRoutes[field];
+  const kw = routeByKeywords(text + " " + (quote || ""));
+  let force = "", driver = "", how = "no keyword match — assign manually";
+  if (route){ [force, driver] = route; how = `brief field “${field}”`; }
+  else if (kw){ force = kw.force; driver = kw.driver; how = `keywords: ${kw.hits.slice(0, 3).join(", ")}`; }
+  let direction = "mixed";
+  if (force){ const g = guessDirection(force, driver, text); direction = g.dir; if (g.flip) how += `; direction flipped by “${g.flip.trim()}”`; }
+  return {fact: text.trim(), quote: (quote || "").trim(), section, doc, force, driver, direction, how};
+}
+
+function parseBrief(raw, doc){
+  const facts = [], gaps = [];
+  let txt = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "");
+  let data = null;
+  try { data = JSON.parse(txt); } catch(e) {}
+  if (data && typeof data === "object"){
+    if (data.company && !document.getElementById("brief-company").value) document.getElementById("brief-company").value = data.company;
+    for (const [k, v] of Object.entries(data)){
+      if (k === "top_competitors" && Array.isArray(v)){
+        // One combined fact: a list of names says little on its own; the share pattern is the evidence.
+        const shares = v.map(c => parseFloat(String(c.market_share || "").replace(/[^0-9.]/g, ""))).filter(x => !isNaN(x));
+        const lead = shares.length ? Math.max(...shares) : null;
+        const f = makeFact(`${v.length} named competitors: ${v.map(c => `${c.name} (${c.market_share || "share not stated"})`).join("; ")}.`,
+          v.map(c => c.source_quote).filter(has).join(" … "), FIELD_TITLES[k], doc, k);
+        if (lead == null){ f.direction = "mixed"; f.how += "; no shares stated, so direction left mixed"; }
+        else if (lead >= 40){ f.direction = "lowers"; f.how += `; a leader holds ${lead}% (dominant leader → lower rivalry)`; }
+        else { f.direction = "raises"; f.how += `; largest share is ${lead}% (no dominant leader → higher rivalry)`; }
+        facts.push(f);
+      } else if (k === "gaps" && Array.isArray(v)){ gaps.push(...v); }
+      else if (v && typeof v === "object" && has(v.summary)){
+        if (/^NOT FOUND/i.test(v.summary)) { gaps.push(`${FIELD_TITLES[k] || k}: not found in brief`); continue; }
+        facts.push(makeFact(v.summary, v.source_quote, FIELD_TITLES[k] || k, doc, k));
+      }
+    }
+    return {facts, gaps, mode: "JSON brief"};
+  }
+  // Markdown / plain text: walk lines, track headings, split paragraphs into sentences.
+  let heading = "", field = null, para = 0, inGaps = false;
+  for (let line of txt.split(/\r?\n/)){
+    line = line.trim();
+    if (!line || /^-{3,}$/.test(line)) continue;
+    const h = line.match(/^#{1,6}\s+(.*)/);
+    if (h){
+      heading = h[1].replace(/^\d+\.\s*/, "").trim(); para = 0;
+      inGaps = /gap/i.test(heading);
+      field = null; for (const [re, f] of HEADING_TO_FIELD) if (re.test(heading)) { field = f; break; }
+      if (/^industry brief|naics/i.test(heading)) field = "__skip";
+      continue;
+    }
+    if (field === "__skip") continue;
+    const isQuote = /^>/.test(line);
+    const clean = line.replace(/^>\s*/, "").replace(/^[-*•]\s+/, "").replace(/\*\*|\*|_/g, "").replace(/^"|"$/g, "").trim();
+    if (inGaps){ if (clean) gaps.push(clean); continue; }
+    if (isQuote && facts.length && facts[facts.length - 1]._heading === heading && !facts[facts.length - 1].quote){
+      facts[facts.length - 1].quote = clean.replace(/^[“"]|[”"]$/g, ""); continue;
+    }
+    para++;
+    const isBullet = /^[-*•]\s+/.test(line);
+    const sentences = clean.split(/(?<=[.!?])\s+(?=[A-Z0-9“"$])/).filter(s => s.length >= (isBullet ? 8 : 25));
+    sentences.forEach((s, i) => {
+      const sec = (heading || "Text") + `, ¶${para}` + (sentences.length > 1 ? ` s${i + 1}` : "");
+      const f = makeFact(s, "", sec, doc, field); f._heading = heading; facts.push(f);
+    });
+  }
+  return {facts, gaps, mode: "text brief"};
+}
+
+function renderReview(){
+  const opts = (sel, arr) => arr.map(([v, l]) => `<option value="${esc(v)}" ${v === sel ? "selected" : ""}>${esc(l)}</option>`).join("");
+  const forceOpts = [["", "— ignore —"], ...FORCES.map(f => [f.id, f.name])];
+  const rows = WORK.map((f, i) => {
+    const drvOpts = f.force ? forceById[f.force].drivers.map(d => [d.id, d.name]) : [["", "—"]];
+    const flag = f.force && !isCited(f) ? `<div class="row-flag">needs document + section to count</div>` : "";
+    return `<tr data-i="${i}">
+      <td class="txt"><textarea data-k="fact" rows="3" style="min-height:0;font:13px/1.4 var(--sans);padding:4px 6px">${esc(f.fact)}</textarea>${has(f.quote) ? `<div class="small muted">“${esc(f.quote)}”</div>` : ""}<div class="small muted">routed by ${esc(f.how || "analyst")}</div>${flag}</td>
+      <td><select data-k="force">${opts(f.force, forceOpts)}</select></td>
+      <td><select data-k="driver">${opts(f.driver, drvOpts)}</select></td>
+      <td><select data-k="direction">${opts(f.direction, [["raises","▲ raises"],["lowers","▼ lowers"],["mixed","◆ mixed"]])}</select></td>
+      <td><input type="text" data-k="doc" value="${esc(f.doc)}" placeholder="Document"></td>
+      <td><input type="text" data-k="section" value="${esc(f.section)}" placeholder="Section / page"></td>
+      <td><button class="btn ghost" data-del="${i}" title="Remove">✕</button></td></tr>`;
+  }).join("");
+  document.getElementById("review-table").innerHTML = `<tr><th>Fact</th><th>Force</th><th>Driver</th><th>Direction</th><th>Document</th><th>Section / page</th><th></th></tr>${rows}`;
+}
+
+function renderScores(){
+  const results = scoreAll(WORK);
+  const lc = pickLeastConfident(results);
+  const company = document.getElementById("brief-company").value || "Pasted brief";
+  document.getElementById("score-out").innerHTML = `
+    <div class="small muted">${esc(company)} · auto-drafted rationales — edit them in your write-up; the scores and citations are what the tool vouches for.</div>
+    ${renderTiles(results)}
+    ${results.map(r => renderForce(r, draftRationale(r), null)).join("")}
+    <h2>Overall read (auto-draft)</h2><div class="panel"><p>${esc(draftOverall(results))}</p></div>
+    <h2>Least confident: ${esc(lc.force.name)}</h2><div class="panel"><p>${esc(draftSettle(lc))}</p></div>
+    <div class="no-print" style="margin:16px 0"><button class="btn" onclick="window.print()">Print / save as PDF</button></div>`;
+}
+function refresh(){ renderReview(); renderScores(); saveDraft(); }
+
+document.getElementById("review-table").addEventListener("change", e => {
+  const tr = e.target.closest("tr[data-i]"); if (!tr) return;
+  const f = WORK[+tr.dataset.i], k = e.target.dataset.k;
+  f[k] = e.target.value; f.how = f.how && !/analyst/.test(f.how) ? f.how + "; edited by analyst" : "analyst";
+  if (k === "force"){ f.driver = f.force ? forceById[f.force].drivers[0].id : ""; if (f.force) f.direction = guessDirection(f.force, f.driver, f.fact).dir; }
+  refresh();
+});
+document.getElementById("review-table").addEventListener("click", e => {
+  const b = e.target.closest("[data-del]"); if (!b) return; WORK.splice(+b.dataset.del, 1); refresh();
+});
+document.getElementById("btn-add").onclick = () => { WORK.push({fact: "", quote: "", section: "", doc: "", force: "", driver: "", direction: "mixed", how: "analyst"}); refresh(); };
+document.getElementById("btn-process").onclick = () => {
+  const raw = document.getElementById("brief-in").value;
+  if (!raw.trim()) return;
+  const {facts, gaps, mode} = parseBrief(raw, document.getElementById("brief-doc").value || "Industry brief");
+  WORK = facts.map(({_heading, ...f}) => f);
+  document.getElementById("gaps-out").innerHTML = `<p class="small muted" style="margin-top:10px">Parsed as ${mode}: ${facts.length} candidate facts, ${facts.filter(f => f.force).length} auto-routed.</p>` +
+    (gaps.length ? `<p class="small"><strong>Gaps reported by the brief:</strong></p><ul class="small">${gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>` : "");
+  document.getElementById("review").classList.remove("hidden");
+  refresh();
+};
+document.getElementById("btn-example").onclick = () => {
+  document.getElementById("brief-in").value = EV.exampleBrief || EXAMPLE_FALLBACK;
+  document.getElementById("brief-company").value = EV.exampleBrief ? EV.company.name : "Example Co";
+  document.getElementById("brief-doc").value = EV.exampleBriefDoc || "Industry brief";
+};
+document.getElementById("btn-clear").onclick = () => { document.getElementById("brief-in").value = ""; WORK = []; document.getElementById("review").classList.add("hidden"); saveDraft(); };
+const EXAMPLE_FALLBACK = `## Supply Chain Concentration / Fragility
+Three suppliers control most of the specialty resin market, and switching to an alternative supplier takes 12 to 18 months of requalification.
+## Customer Concentration / Fragmentation
+The top two customers account for 41% of revenue.
+## Top Competitors
+The industry is fragmented, with no competitor above 8% market share.`;
+
+function saveDraft(){ try { localStorage.setItem("ffs-draft", JSON.stringify({brief: document.getElementById("brief-in").value, work: WORK})); } catch(e) {} }
+function loadDraft(){
+  try { const d = JSON.parse(localStorage.getItem("ffs-draft") || "null");
+    if (d && d.work && d.work.length){ document.getElementById("brief-in").value = d.brief || ""; WORK = d.work; document.getElementById("review").classList.remove("hidden"); renderReview(); renderScores(); }
+  } catch(e) {}
+}
+
+/* ---------------- tab 3: method ---------------- */
+function renderMethod(){
+  const S = RULES.scale;
+  document.getElementById("method-out").innerHTML = `
+  <div class="panel">
+    <h3>Why the scores are computed, not chosen</h3>
+    <p>A rating with no evidence is a vibe. So the analyst never types a force score: they cite facts, tag each fact to one of Porter's drivers and say whether it raises or lowers the force. The tool turns that into a score with three fixed rules, shown below. If an analyst's written score disagrees with the computed one, the page flags it.</p>
+    <ol>
+      <li><strong>Driver rating.</strong> ${esc(S.driverRule)}</li>
+      <li><strong>Force score.</strong> ${esc(S.formula)}</li>
+      <li><strong>Rounding & tension.</strong> ${esc(S.rounding)}</li>
+      <li><strong>Confidence.</strong> High: ${esc(S.confidence.High)}. Medium: ${esc(S.confidence.Medium)}. Low: ${esc(S.confidence.Low)}.</li>
+      <li><strong>What counts as a fact.</strong> A fact counts only with a document and a section or page. Uncited facts are shown in the review table but excluded from scores.</li>
+    </ol>
+    <p class="small muted">Why equal weights: weighting drivers would let the analyst move the score after seeing it. Equal weights are crude but cannot be tuned to a conclusion. The cost is that one strong fact and one weak fact count the same — the rationale is where that gets argued.</p>
+  </div>
+  <div class="panel">
+    <h3>How a pasted brief is processed</h3>
+    <ol>
+      <li><strong>Parse.</strong> JSON from the Industry Brief Generator is read field by field (summary + source quote). Markdown or plain text is split into sentences, keeping the heading as the section and a paragraph number (¶) as the locator.</li>
+      <li><strong>Route.</strong> Brief fields with a clear home go there: ${Object.entries(RULES.briefFieldRoutes).map(([k, v]) => `<span class="mono">${esc(k)}</span> → ${esc(forceById[v[0]].name)} / ${esc(driverName(v[0], v[1]))}`).join("; ")}. Everything else is routed to the driver whose keyword list (below) it matches most.</li>
+      <li><strong>Direction.</strong> Each driver has a default direction. If the sentence contains a flip word (${RULES.flipWords.map(w => `<span class="mono">${esc(w.trim())}</span>`).join(", ")}), the direction is flipped. This is a heuristic; the review table exists because it will be wrong sometimes.</li>
+      <li><strong>Review, enrich, score.</strong> The analyst checks each row, adds 10-K or analyst-report facts, and the scores recompute live.</li>
+    </ol>
+  </div>
+  <h2>Driver & keyword table</h2>
+  ${FORCES.map(f => `<div class="panel"><h3>${esc(f.name)}</h3><table><tr><th>Driver</th><th>Default</th><th>Keywords</th></tr>${f.drivers.map(d => `<tr><td>${esc(d.name)}${d.note ? `<div class="small muted">${esc(d.note)}</div>` : ""}</td><td>${d.default}</td><td class="small">${d.keywords.map(esc).join(", ")}</td></tr>`).join("")}</table></div>`).join("")}`;
+}
+
+/* ---------------- tabs ---------------- */
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  ["analysis", "score", "method"].forEach(t => document.getElementById("tab-" + t).classList.toggle("hidden", t !== b.dataset.tab));
+  try { history.replaceState(null, "", "#" + b.dataset.tab); } catch(e) {}
+});
+renderAnalysis(); renderMethod(); loadDraft();
+document.getElementById("print-link").textContent = location.href.startsWith("http") ? "Live tool: " + location.href.split("#")[0] : "";
+const start = (location.hash || "").slice(1);
+if (["score", "method"].includes(start)) document.querySelector(`.tabs button[data-tab="${start}"]`).click();
+</script>
+</body>
+</html>
